@@ -1,0 +1,15 @@
+-if attachments.any?
+  #attachment-info-slider.carousel.slide.cover-attachments-carousel{'data-ride':'carousel'}
+    %ol.carousel-indicators
+      -attachments.each_with_index do |attachment,index|
+        %li{class: index==0 ? 'active' : '', 'data-target': '#serial-info-slider', 'data-slide-to': index}
+    .carousel-inner
+      -attachments.each_with_index do |attachment,index|
+        .carousel-item{class: index==0 ? 'active' : ''}
+          %img.d-block.w-100{src: image_path(attachment.cover_url), itemprop: 'image'}
+      %a.carousel-control-prev{href: '#attachment-info-slider', role: 'button', 'data-slide': 'prev'}
+        %span.carousel-control-prev-icon{"aria-hidden": 'true'}
+        %span.sr-only Previous
+      %a.carousel-control-next{href: '#attachment-info-slider', role: 'button', 'data-slide': 'next'}
+        %span.carousel-control-next-icon{"aria-hidden": 'true'}
+        %span.sr-only Next

@@ -1,0 +1,11 @@
+%main.page
+  .container-fluid
+    .panel.bg-light
+
+      %h1.heading
+        Добавление эпизода к
+        =link_to(@serial.title,serial_path(@serial.transliterated_link))
+      =form_for @chapter, url: serial_episode_index_path(serial_id:@serial.transliterated_link) do |f|
+        =render 'form', f:f
+        .row.align-items-center
+          .col.text-right=f.submit 'Сохранить', class: 'btn btn-primary'

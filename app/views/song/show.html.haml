@@ -1,0 +1,46 @@
+-content_for :title do
+  =@song.seo_title
+-content_for :description do
+  =@song.seo_description
+%main.page
+  .container-fluid
+    =render partial: 'fragments/adv/legal/adv_block'
+    .panel.bg-light
+      -@song.seo_header
+      %h1=@song.seo_header
+      -if user_signed_in?
+        .admin-nav
+          %a.btn.btn-sm.btn-warning{href: edit_song_path(@song.link)} Редактировать
+      .serial-info
+        .row
+          .serial-info-left.col-12.col-md-5.col-lg-4
+            =render partial: 'fragments/html/attachments_carousel', locals: {attachments: @song.attachments.select(&:is_applied)}
+          .serial-info-right.col-12.col-md-7.col-lg-8
+            .serial-info-rows
+              =render partial: 'fragments/html/moderation_status_rows', locals: {obj:@song}
+              .serial-info-row
+                .serial-info-name=Song::EDITABLE_FIELDS[:title_translated]
+                .serial-info-value=@song.title_translated
+              .serial-info-row
+                .serial-info-name=Song::EDITABLE_FIELDS[:description]
+                .serial-info-value=@song.description.to_s.html_safe
+        .panel.bg-light=commontator_thread(@song)
+        -unless @song.song_participates.blank?
+          .row
+            .col-12.col-md-2
+              %h2 Аниме
+            .col-12.col-md-10
+              -@serials.each_pair do |relation_title,dataset|
+                %h3=relation_title
+                -dataset.sort_by{|serial| serial[:title]}.each_with_index do |serial,index|
+                  ="#{link_to(serial[:title],serial[:link])}#{dataset.size==index+1 ? '' : ','}".html_safe
+        -unless @song.song_stuffs.blank?
+          %br
+          .row
+            .col-12.col-md-2
+              %h2 Создатели
+            .col-12.col-md-10
+              -@stuff.each_pair do |credit_title,dataset|
+                %h3=credit_title
+                -dataset.sort_by{|creator| creator[:title]}.each_with_index do |creator,index|
+                  ="#{link_to(creator[:title],creator[:link])}#{dataset.size==index+1 ? '' : ','}".html_safe

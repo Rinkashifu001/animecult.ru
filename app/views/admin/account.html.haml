@@ -1,0 +1,24 @@
+-content_for :title do
+  =@account.full_title
+%main.page
+  .container-fluid
+    .panel.bg-light
+      %h1.heading=@account.full_title
+      %table.table
+        %thead
+          %tr
+            %th ID
+            %th Email
+            %th Provider
+        %tbody
+          -@account.users.each do |user|
+            %tr
+              %td=user.id
+              %td
+                -if user.provider.blank?
+                  =user.email
+                -else
+                  =user.provider_title
+              %td
+                -unless user.provider.blank?
+                  =user.provider

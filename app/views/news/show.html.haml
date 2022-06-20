@@ -1,0 +1,23 @@
+-content_for :title do
+  =@new.title
+-content_for :description do
+  =@new.descr_short
+
+%main.page
+  .container-fluid
+    =render partial: 'fragments/adv/legal/adv_block'
+    .panel.bg-light
+
+      .admin-nav
+        %a.btn.btn-sm.btn-warning{href:edit_news_path(@new)}='Редактировать'
+        -if user_signed_in? && current_user.moderation_available?
+          =link_to('Удалить',news_path(@new),method: :delete,class: 'btn btn-sm btn-danger', :data => { :confirm => 'Вы уверены?'})
+
+      %ol.breadcrumb
+        %li.breadcrumb-item
+          %a{href:news_index_path}='Все новости'
+        %li.breadcrumb-item.active=@new.title
+
+      %h1.heading=@new.title
+      =@new.descr_full.html_safe
+      .panel.bg-light=commontator_thread(@new)

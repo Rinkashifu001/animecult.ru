@@ -1,0 +1,25 @@
+-content_for :title do
+  Модерация картинок
+%main.page
+  .container-fluid
+    .panel.bg-light
+      %h1.heading Картинки к утверждению
+      -unless @attachments.blank?
+        %table.table#attachments
+          %thead
+            %tr
+              %th Объект
+              %th Автор
+              %th Картинка
+              %th Действие
+          %body
+            -@attachments.each do |image|
+              %tr
+                %td=link_to("#{image.main_object.class::NAME} #{image.main_object.title}",get_pass(image.main_object))
+                %td=image.user.blank? ? '' : image.user.show_title
+                %td=image_tag(image.cover_url,height: 130)
+                %td
+                  =link_to '✓',apply_attachment_moderate_index_path(id:image.id),method: :post, data: { confirm: 'Действительно разрешить обложку?' }, class: 'btn btn-primary'
+                  =link_to 'X',remove_attachment_moderate_index_path(id:image.id),method: :post, data: { confirm: 'Действительно удалить обложку?' }, class: 'btn btn-danger'
+
+

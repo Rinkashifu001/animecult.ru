@@ -1,0 +1,18 @@
+.row
+  .large-12.columns2
+    .panel
+      %h1=t('.h1',title:@serial.title)
+      %p
+        %b=t('.description')
+        =@serial.description2
+      -if flash[:notice]
+        .alert-box{'data-alert'=>true}=flash[:notice]
+      = form_for @translate do |f|
+        .field
+          = f.label t('translates.new.your_description')
+          = f.text_area :description
+          = f.hidden_field :serial_id, value:@serial.id
+        .actions
+          = f.submit t('.submit'), class: 'button tiny'
+          %a{href:translate_serial_path(@serial.id)}
+            .button.tiny.right=t('.back')

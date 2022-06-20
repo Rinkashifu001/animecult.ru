@@ -1,0 +1,28 @@
+-p data
+.dropdown
+  %i.favorited-toggle.fa.fa-2x.favorited-item{'data-scope':'favorited',class:data.select{|f| f.scope=='favorited'}.any? ? 'fa-heart' : 'fa-heart-o'}
+  %i.fa.fa-2x.dropdown-toggle.favorited-item#dropdownFavorite{'data-toggle':'dropdown','aria-haspopup':'true','aria-expanded':'false',
+    class:data.select{|f| f.scope!='favorited'}.any? ? 'fa-bookmark' : 'fa-bookmark-o'}
+  .dropdown-menu{'aria-labelledby':'dropdownFavorite'}
+    -Favorite::SCOPES.each_pair do |key,title|
+      %a.dropdown-item.favorited-toggle{'data-scope':key,href:'#',class:data.select{|f| f.scope==key.to_s}.blank? ? '' : 'active'}=title
+    -unless data.select{|f| f.scope!='favorited'}.blank?
+      .dropdown-divider
+      %a.dropdown-item.favorited-toggle{href:'#'} Удалить
+.modal.fade#favorite_modal{'aria-hidden':'true'}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %h5.modal-title Добавление в закладки
+        %button.close{'data-dismiss':'modal','aria-label':'Close'}
+          %span{'aria-hidden':'true'} &times;
+      .modal-body
+        .form-group
+          %strong Добавьте комментарий
+          %textarea.form-control{placeholder:'Необязательно...',style:'height:150px;'}
+        .form-group
+          %strong Номер эпизода
+          %input.form-control{type:'number',min:0,max:10000,placeholder:'Необязательно...'}
+      .modal-footer
+        %button.btn.btn-secondary{'data-dismiss':'modal'} Выход
+        %button.btn.btn-primary Добавить

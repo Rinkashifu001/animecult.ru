@@ -1,0 +1,7 @@
+-if obj.errors.any?
+  .alert.alert-danger
+    %h2.heading.heading-2="Допущены ошибки в количестве: #{obj.errors.count}"
+    -obj.errors.full_messages.each_with_index do |msg,index|
+      -unless index.zero?
+        %br
+      =msg

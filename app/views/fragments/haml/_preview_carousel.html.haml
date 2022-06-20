@@ -1,0 +1,21 @@
+-serials_with_images_id = []
+-serials.each do |serial|
+  -unless serial.attachments.blank?
+    -serials_with_images_id << serial.id
+-unless serials_with_images_id.blank?
+  #anime-show-slider.carousel.slide{'data-ride':'carousel'}
+    %ol.carousel-indicators
+      -serials.each do |serial|
+        -if serials_with_images_id.include?(serial.id)
+          %li{class: serials_with_images_id.index(serial.id).zero? ? 'active' : '', 'data-target': '#anime-show-slider', 'data-slide-to': serial.id}
+    .carousel-inner
+      -@serials.each do |serial|
+        -if serials_with_images_id.include?(serial.id)
+          .carousel-item{class: serials_with_images_id.index(serial.id).zero? ? 'active' : ''}
+            %img.d-block.w-100{src: serial.attachments[0].cover_url}
+    %a.carousel-control-prev{href: "#anime-show-slider", role: "button", "data-slide": "prev"}
+      %span.carousel-control-prev-icon{"aria-hidden": "true"}
+      %span.sr-only="Previous"
+    %a.carousel-control-next{href: "#anime-show-slider", role: "button", "data-slide": "next"}
+      %span.carousel-control-next-icon{"aria-hidden": "true"}
+      %span.sr-only="Next"

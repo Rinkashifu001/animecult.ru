@@ -1,0 +1,15 @@
+=render partial: 'fragments/html/errors', locals: {obj: @element}
+.form-group
+  =f.label :title, Element::EDITABLE_FIELDS[:title]
+  =f.text_field :title, class: 'form-control'
+.form-group
+  =f.label :link, Element::EDITABLE_FIELDS[:link]
+  =f.text_field :link, class: 'form-control', placeholder: 'Оставьте пустым для генерации из названия'
+.form-group
+  =f.label :elem_type, Element::EDITABLE_FIELDS[:elem_type]
+  =f.select(:elem_type, Element::TITLES.map{|k,v| [v,k]},{},{class: 'form-control'})
+.form-group
+  =f.label :description, Element::EDITABLE_FIELDS[:description]
+  =f.text_area :description,id:'froalaEditor',size: '50x20', class: 'form-control'
+
+

@@ -1,0 +1,38 @@
+-content_for :title do
+  =t(".title#{@page>1 ? '_2' : ''}",page:@page,title:@genre.title)
+-content_for :description do
+  =t(".description#{@page>1 ? '_2' : ''}",page:@page,title:@genre.title)
+=content_for(:next_page) do
+  =special_page_link(@serials,:next_page)
+=content_for(:previous_page) do
+  =special_page_link(@serials,:previous_page)
+
+%main.page
+  .container-fluid
+    =render partial: 'fragments/adv/legal/adv_block'
+    .panel.bg-light
+
+      %h1.heading=t(".h1#{@page>1 ? '_2' : ''}",page:@page,title:@genre.title)
+
+      - if user_signed_in?
+
+        .admin-nav
+          %a.btn.btn-sm.btn-warning{href:edit_element_path(@genre)}='Редактировать'
+
+      .anime-show
+        .row
+          .anime-show-left.col-12.col-md-5.col-lg-4
+            =render partial: 'fragments/haml/preview_carousel', locals: {serials: @serials}
+          .anime-show-right.col-12.col-md-7.col-lg-8
+            =render partial: 'fragments/html/moderation_status_rows', locals: {obj:@genre}
+            .anime-show-content
+              .anime-show-title=t('.special_description',title:@genre.title)
+              .anime-show-desc=@genre.description.to_s.html_safe
+
+
+
+      -if @serials.any?
+        %h2.heading.heading-2=t('.h2',title:@genre.title)
+        =render partial: 'fragments/haml/anime_list',locals: {serials:@serials}
+
+        =paginate @serials

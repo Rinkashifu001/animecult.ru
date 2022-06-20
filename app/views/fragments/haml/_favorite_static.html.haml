@@ -1,0 +1,17 @@
+.modal.fade#favorite_modal{'aria-hidden':'true'}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %h5.modal-title Добавление в закладки
+        %button.close{'data-dismiss':'modal','aria-label':'Close'}
+          %span{'aria-hidden':'true'} &times;
+      .modal-body
+        .form-group
+          %strong Добавьте комментарий
+          %textarea.form-control#favorite_comment{placeholder:'Необязательно...',style:'height:150px;'}
+        .form-group
+          %strong Номер эпизода
+          %input.form-control#favorite_chapter_id{type:'number',min:0,max:10000,placeholder:'Необязательно...'}
+      .modal-footer
+        %button.btn.btn-secondary{'data-dismiss':'modal'} Выход
+        %button.btn.btn-primary#favorite_add Добавить

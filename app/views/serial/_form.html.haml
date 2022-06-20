@@ -1,0 +1,32 @@
+.text-right=f.submit 'Сохранить', class: 'btn btn-primary'
+
+=render partial: 'fragments/html/errors', locals: {obj: @serial}
+.form-group
+  =f.label :transliterated_link, Serial::EDITABLE_FIELDS[:transliterated_link]
+  =f.text_field :transliterated_link, class: 'form-control', placeholder: 'Оставьте пустым для генерации из названия'
+.form-group
+  =f.label :title, Serial::EDITABLE_FIELDS[:title]
+  =f.text_field :title, class: 'form-control'
+.form-group
+  =f.label :english_title, Serial::EDITABLE_FIELDS[:english_title]
+  =f.text_field :english_title, class: 'form-control'
+.form-group
+  =f.label :original_title, Serial::EDITABLE_FIELDS[:original_title]
+  =f.text_field :original_title, class: 'form-control'
+.form-group
+  =f.label :aka, Serial::EDITABLE_FIELDS[:aka]
+  =f.text_area :aka, class: 'form-control', placeholder: 'Разделитель "/"'
+.form-group
+  .row
+    .col-6
+      =f.label :release, Serial::EDITABLE_FIELDS[:release]
+      =f.number_field :release, in: 0..2050, step:1
+      =f.label :full_length, Serial::EDITABLE_FIELDS[:full_length]
+      =f.check_box :full_length
+      =f.label :adult, Serial::EDITABLE_FIELDS[:adult]
+      =f.check_box :adult
+    .col-6
+      =render partial: 'fragments/haml/images_block', locals: {object: @serial,form:f}
+.form-group
+  =f.label :description, Serial::EDITABLE_FIELDS[:description]
+  =f.text_area :description,id:'froalaEditor',size: '50x20', class: 'form-control'

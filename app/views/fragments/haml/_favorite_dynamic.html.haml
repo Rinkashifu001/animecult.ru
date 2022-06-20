@@ -1,0 +1,10 @@
+.dropdown
+  %i.favorited-toggle.fa.fa-2x.favorited-item{'data-scope':'favorited','data-title':'Избранное',class:data.include?(:favorited) ? 'fa-heart' : 'fa-heart-o','data-active':data.include?(:favorited)}
+  %i.fa.fa-2x.dropdown-toggle.favorited-item#dropdownFavorite{'data-toggle':'dropdown','aria-haspopup':'true','aria-expanded':'false',
+    class:(data.keys()-[:favorited]).any? ? 'fa-bookmark' : 'fa-bookmark-o'}
+  .dropdown-menu{'aria-labelledby':'dropdownFavorite'}
+    -Favorite::SCOPES.each_pair do |key,title|
+      %a.dropdown-item.favorited-toggle{'data-scope':key,href:'#',class:data.include?(key) ? 'active' : '','data-title':title,'data-active':data.include?(key)}=title
+    -if (data.keys()-[:favorited]).any?
+      .dropdown-divider
+      %a.dropdown-item.favorited-toggle{href:'#','data-active':''} Удалить

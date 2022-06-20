@@ -1,0 +1,10 @@
+-unless obj.is_applied?
+  .serial-info-row
+    .serial-info-name Статус:
+    .serial-info-value
+      .badge.badge-alert Не подтверждено модератором
+-if obj.is_cancelled?
+  .serial-info-row
+    .serial-info-name Состояние:
+    .serial-info-value
+      .badge.badge-alert Блокировано модератором

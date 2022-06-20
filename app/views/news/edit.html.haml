@@ -1,0 +1,13 @@
+%main.page
+  .container-fluid
+    .panel.bg-light
+
+      %ol.breadcrumb
+        %li.breadcrumb-item
+          =link_to(@new.title,news_path(@new))
+        %li.breadcrumb-item.active Редактировать
+        -if current_user.moderation_available?
+          %li.breadcrumb-item=link_to('Удалить',news_path(@new),method: :delete, :data => { :confirm => 'Вы уверены?'})
+
+      =form_for @new, url: news_path(@new), html: { method: :put } do |f|
+        =render 'form', f:f

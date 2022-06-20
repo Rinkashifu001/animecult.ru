@@ -1,0 +1,30 @@
+-content_for :title do
+  Редактирование профиля
+%main.page
+  .container-fluid
+    .panel.bg-light
+
+      .row.justify-content-center
+        .col-12.col-sm-8.col-md-6.col-lg-4
+          %legend Редактирование профиля
+          =form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
+            = devise_error_messages!
+
+            .form-group
+              %label{for:'source'}
+                -if current_user.provider.blank?
+                  Электронная почта
+                -else
+                  Регистратор
+              %br
+              %input.form-control{name:'source',readonly: true,value: current_user.provider.blank? ? current_user.email : current_user.provider}
+
+            .form-group
+              .field
+                =f.label :nickname, 'Ник'
+                %br
+                =f.text_field :nickname, class: 'form-control', readonly: !current_user.nickname.blank?
+
+            .form-group
+              =f.submit 'Обновить', class: "btn btn-success"
+

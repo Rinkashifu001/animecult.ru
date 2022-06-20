@@ -1,0 +1,58 @@
+-content_for :title do
+  Настройки сайта администратором
+%main.page
+  .container-fluid
+    .panel.bg-light
+      %h1.heading Настройки сайта администратором
+      %h3.heading-3
+        Adblock
+        %a{href:adblock_index_path}
+          -if @adblock_count.zero?
+            %span.badge.badge-secondary Исключений нет
+          -else
+            %span.badge.badge-success="Исключений: #{@adblock_count}"
+      =form_for(@admin_data,url:admin_path(@admin_data)) do |f|
+        .row
+          .col-6
+            %h3.heading-3 Рекламные блоки
+          .col-6
+            .text-right=f.submit 'Сохранить', class: 'btn btn-primary'
+        .row
+          .col-6
+            .form-group
+              =f.label :adv_desktop, 'Desktop'
+              =f.text_area :adv_desktop, class: 'form-control admin-adv-configure-block'
+          .col-6
+            .form-group
+              =f.label :adv_mobile, 'Mobile'
+              =f.text_area :adv_mobile, class: 'form-control admin-adv-configure-block'
+      %h3.heading-3 Аккаунты сайта
+      %table.table#accounts
+        %thead
+          %tr
+            %th ID
+            %th Ник
+            %th Админ
+            %th Модератор
+            %th Редактор
+        %body
+          -@accounts.each do |account|
+            %tr
+              %td=link_to(account.id,account_admin_index_path(account_id:account.id))
+              %td
+                %input.form-control.account-nickname{value:account.nickname,'data-id':account.id}
+              %td=account.is_admin? ? 'Да' : 'Нет'
+              %td
+                -if account.is_moderator?
+                  Да,
+                  =link_to('Снять',cancel_moderator_moderate_index_path(account_id:account.id),method: :post, :data => { :confirm => 'Вы уверены?'})
+                -else
+                  Нет,
+                  =link_to('Назначить',appoint_moderator_moderate_index_path(account_id:account.id),method: :post, :data => { :confirm => 'Вы уверены?'})
+              %td
+                -if account.is_editor?
+                  Да,
+                  =link_to('Снять',cancel_editor_moderate_index_path(account_id:account.id),method: :post, :data => { :confirm => 'Вы уверены?'})
+                -else
+                  Нет,
+                  =link_to('Назначить',appoint_editor_moderate_index_path(account_id:account.id),method: :post, :data => { :confirm => 'Вы уверены?'})

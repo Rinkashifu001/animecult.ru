@@ -1,0 +1,30 @@
+%main.page
+  .container-fluid
+    .panel.bg-light
+
+      -if flash[:notice]
+        .alert.alert-warning{'data-alert'=>true}=flash[:notice]
+
+      -if @translates
+
+        .table-responsive
+
+          %table.table
+            %tr
+              %th{style:'width:150px'}=t('.serial')
+              %th{style:'width:50%'}=t('.original')
+              %th{style:'width:50%'}=t('.translate')
+            -@translates.each do |translate|
+              %tr{style:translate.selected ? 'font-weight:bold' : ''}
+                %td
+                  =link_to(translate.serial.title,serial_path(translate.serial.clear_link), class: 'btn btn-sm btn-info') if translate.serial
+                  %br
+                  %br
+                  =link_to(t('.edit'),edit_translate_path(id:translate.id,page:@page), class: 'btn btn-sm btn-warning')
+                  %br
+                  %br
+                  =link_to(t('.delete'),translate_path(id:translate.id,page:@page),method: :delete, class: 'btn btn-sm btn-danger')
+                %td=translate.serial.description2 if translate.serial
+                %td=translate.description
+
+          =will_paginate @translates

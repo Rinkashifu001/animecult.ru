@@ -1,0 +1,7 @@
+%main.page
+  .container-fluid
+    .panel.bg-light
+
+      %h1.heading='Создание аниме'
+      =form_for @serial, url: serial_index_path, html: {multipart: true} do |f|
+        =render 'form', f:f

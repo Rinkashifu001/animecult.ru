@@ -1,0 +1,29 @@
+-content_for :title do
+  Модерация
+%main.page
+  .container-fluid
+    .panel.bg-light
+      %h1.heading Модерация
+      -@objects.each_pair do |key,objects|
+        %h3.heading-3
+          =objects.klass::NAME
+          %a{href:objects_moderate_index_path(object_type: key)}
+            -if objects.blank?
+              %span.badge.badge-secondary Новых нет
+            -else
+              %span.badge.badge-success="Новых: #{objects.size}"
+      %h3.heading-3
+        Картинки
+        %a{href:images_moderate_index_path}
+          -if @attachments.blank?
+            %span.badge.badge-secondary Новых нет
+          -else
+            %span.badge.badge-success="Новых: #{@attachments.size}"
+      %h3.heading-3
+        Правки
+        %a{href:revisions_moderate_index_path}
+          -if @revisions.blank?
+            %span.badge.badge-secondary Новых нет
+          -else
+            %span.badge.badge-success="Новых: #{@revisions.size}"
+

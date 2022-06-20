@@ -1,0 +1,141 @@
+-content_for :title do
+  =get_seo_title
+-content_for :description do
+  =t('.description')
+=content_for(:next_page) do
+  =special_page_link(@serials,:next_page)
+=content_for(:previous_page) do
+  =special_page_link(@serials,:previous_page)
+
+%main.page
+  .container-fluid
+    .filter-panel.panel.bg-light
+      %form#filter-search.filter-search
+        .input-group
+          %input.form-control#key{name:'key',value:@key,type:'text',placeholder:t('.placeholder'),maxlength:40, autocomplete: 'off'}
+          %input#search_elements{name:'search_elements',value:@search_elements,type:'hidden'}
+          %input#non_search_elements{name:'non_search_elements',value:@non_search_elements,type:'hidden'}
+          %input#release_v1{name:'release_v1',value:@release_v1,type:'hidden'}
+          %input#release_v2{name:'release_v2',value:@release_v2,type:'hidden'}
+          .input-group-append
+            %input.btn.btn-primary{type:'submit',value:t('.submit')}
+
+
+
+      .filter.accordion
+
+        .filter-btn.btn.btn-lg.btn-secondary{class: !@search_elements ? 'collapsed' : '', "data-target": "#filter", "data-toggle": "collapse", "aria-expanded": @search_elements ? 'true' : 'false', "aria-controls": "collapseOne"}
+          .filter-title=t '.advanced_search'
+          %button#filter-clear.filter-clear.btn.btn-sm.btn-danger=t '.advanced_search_clear'
+
+        .filter-content.collapse{id: "filter", class: @search_elements ? 'show' : '', "data-parent": "#filter"}
+          .filter-content-inner
+
+            .filter-genre
+              %b=t('.genre')
+              .badge.badge-type1=t '.include'
+              .badge.badge-alert=t '.exclude'
+
+            .filter-genres
+              -@genres.each do |genre|
+                %span.filter-element.badge.badge-secondary{'data-id'=>genre[:id]}=genre[:title]
+
+            .row
+              .col-12.col-lg-6
+                .filter-category
+                  %b=t('.category')
+
+                .filter-categories
+                  -@categories.each do |category|
+                    %span.filter-element.badge.badge-secondary{'data-id'=>category[:id]}=category[:title]
+              .col-12.col-lg-6
+                .filter-additional
+                  %b=t('.additional')
+
+                .filter-additionals
+                  -@additionals.each do |category|
+                    %span.filter-element.badge.badge-secondary{'data-id'=>category[:id]}=category[:title]
+
+            .row.align-items-center
+              .col-12.col-md-8.col-lg-9
+                .filter-release
+                  %b=t('.release')
+                  %input#release_min.filter-input{type:'number',value:@release_v1}
+                  ='-'
+                  %input#release_max.filter-input{type:'number',value:@release_v2}
+                #release.filter-range{'data-min'=>@serial_stat.min_release,'data-max'=>@serial_stat.max_release}
+              .col-12.col-md-4.col-lg-3.text-right
+                %button#filter-submit.filter-submit.btn.btn-primary=t('.submit')
+
+
+    =render partial: 'fragments/adv/legal/adv_block'
+
+  .container-fluid
+    .panel.bg-light
+      %ul.nav.nav-tabs#searchTab{role:'tablist'}
+        %li.nav-item{role:'presentation'}
+          %a.nav-link{id:"news_tab",'data-toggle':'tab',href:"#news",role:'tab','aria-controls':'news','aria-selected':'false'} Новости
+        %li.nav-item{role:'presentation'}
+          %a.nav-link{id:"reviews_tab",'data-toggle':'tab',href:"#reviews",role:'tab','aria-controls':'reviews','aria-selected':'false'} Обзоры
+      .tab-content#searchTabList
+        .tab-pane.fade#news{role:'tabpanel','aria-labelledby':"news_tab"}
+          .row.news-card.p-3.bg-white
+            -@news.each do |new|
+              .col-md-2
+                -if !new.attachments.first.blank? && !new.attachments.first.cover.blank?
+                  %a{href:news_path(new.link)}
+                    .feed-image
+                      =image_tag(new.attachments.first.cover_url,class:'news-feed-image rounded img-fluid img-responsive')
+                      %span.date{style:'font-size: small;color: #a0a0a0; padding-left: 25%; align-content: center;'}=new.created_at.to_date
+              .col-md-4{style: 'padding-bottom: 15px;'}
+                %a{href:news_path(new.link)}
+                  .news-feed-text
+                    %h5=smallize(new.title,70)
+                    %span{style:'font-size: small;'}=smallize(new.descr_short,140)
+          %a.btn.btn-sm.btn-success{href: news_index_path}='Все новости'
+        .tab-pane.fade#reviews{role:'tabpanel','aria-labelledby':"reviews_tab"}
+          .row.news-card.p-3.bg-white
+            -@reviews.each do |review|
+              .col-md-2
+                -if !review.attachments.first.blank? && !review.attachments.first.cover.blank?
+                  %a{href:review_path(review)}
+                    .feed-image
+                      =image_tag(review.attachments.first.cover_url,class:'news-feed-image rounded img-fluid img-responsive')
+                      %span.date{style:'font-size: small;color: #a0a0a0; padding-left: 25%; align-content: center;'}=review.created_at.to_date
+              .col-md-4{style: 'padding-bottom: 15px;'}
+                %a{href:review_path(review)}
+                  .news-feed-text
+                    %h5=smallize(review.title,70)
+                    %span{style:'font-size: small;'}=smallize(review.descr_short,140)
+          %a.btn.btn-sm.btn-success{href: review_index_path}='Все обзоры'
+    %br
+
+  -if @serials.any?
+    .container-fluid
+      .panel.bg-light
+
+        =render partial: 'fragments/haml/seo_block'
+
+        .anime-items
+          .row
+            -@serials.each do |serial|
+              .col-12.col-sm-6.col-md-4.col-lg-3
+                %a.anime-item.anime{href: serial_path(serial.clear_link)}
+                  .anime-top
+                    %span.badge-type13-special=serial.small_title
+                  .anime-body
+                    .anime-visual
+                      .anime-visual-inner
+                        .anime-img-box
+                          %img.anime-img{src:serial.attachments.any? ? serial.attachments[0].cover_url : image_path('404.jpg')}
+                    .anime-content
+                      =smallize(serial.description,200).html_safe
+                      %br
+                      %strong Жанры:
+                      =smallize(serial.genres_string,200)
+                      %br
+                      %strong Тип:
+                      =smallize(serial.category_string,200)
+                      %br
+                      ="#{serial.total_cached_text} | #{serial.release} год"
+        =paginate @serials

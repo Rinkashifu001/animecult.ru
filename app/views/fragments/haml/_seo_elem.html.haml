@@ -1,0 +1,13 @@
+.admin-seo-elem{'data-domain':domain}
+  %h6="SEO: #{domain}"
+  .row
+    .col-5
+      %label{for:"#{domain}_title"} Title
+      %textarea.form-control.seo-title{name:"#{domain}_title"}=data[:title]
+    .col-5
+      %label{for:"#{domain}_h1"} H1
+      %textarea.form-control.seo-h1{name:"#{domain}_h1"}=data[:h1]
+    .col-2
+      %label{for:"#{domain}_klass"} Class
+      %textarea.form-control.seo-klass{name:"#{domain}_klass"}=data[:klass]
+  %br

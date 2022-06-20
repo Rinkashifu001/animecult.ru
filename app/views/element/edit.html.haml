@@ -1,0 +1,14 @@
+%main.page
+  .container-fluid
+    .panel.bg-light
+
+      %h1.heading
+        Редактирование элемента
+        =link_to(@element.title,@path)
+
+      =form_for(@element) do |f|
+        =render 'form', f:f
+        .row.align-items-center
+          .col=link_to 'Назад',@path, class: 'btn btn-secondary'
+          .col.text-right=f.submit 'Сохранить', class: 'btn btn-primary'
+

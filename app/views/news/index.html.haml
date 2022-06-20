@@ -1,0 +1,29 @@
+-title = @page<=1 ? 'Новости из мира аниме' : "Страница №#{@page} Новости из мира аниме"
+-content_for :title do
+  =title
+-content_for :description do
+  =@page<=1 ? 'Новости из мира аниме от пользователей Анимекульта' : "Страница №#{@page} новостей из мира аниме от пользователей Анимекульта"
+
+%main.page
+  .container-fluid
+    =render partial: 'fragments/adv/legal/adv_block'
+    .panel.bg-light
+
+      %h1.heading=title
+      .admin-nav
+        %a.btn.btn-sm.btn-success{href: new_news_path}='Создать новость'
+      .anime-items
+        .row
+          -@news.each do |new|
+            .col-12.col-sm-6.col-md-4.col-lg-3
+              %a.anime-item.anime.anime_theme_2{href:news_path(new.link)}
+                .anime-body
+                  .anime-visual
+                    .anime-visual-inner
+                      .anime-img-box
+                        -unless new.attachments.blank?
+                          %img.anime-img{src:new.attachments.first.cover_url}
+                  .anime-content
+                    =new.title
+
+      .pagination=will_paginate(@news)

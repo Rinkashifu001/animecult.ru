@@ -1,0 +1,27 @@
+-content_for :title do
+  Управление рекламой
+%main.page
+  .container-fluid
+    .panel.bg-light
+      %h1.heading Управление рекламой
+      %h3.heading-3 Исключения
+      =form_for @adblock, url: adblock_index_path do |f|
+        .card
+          .card-body
+            =render partial: 'fragments/html/errors', locals: {obj: @adblock}
+            .row
+              .col-lg-8.col-md-12
+                =f.text_field :title, class: 'form-control',autocomplete:'off',placeholder:'Относительный путь: "/adblock"'
+              .col-4
+                =f.submit 'Добавить', class: 'btn btn-success'
+      %br
+      %table.table#adblock
+        %thead
+          %tr
+            %th Путь
+            %th Удалить
+        %tbody
+          -@adblocks.each do |adblock|
+            %tr
+              %td=link_to(adblock.title,adblock.title,target:'_blank')
+              %td=link_to('X',adblock_path(adblock),method: :delete,class: 'btn btn-sm btn-danger', :data => { :confirm => 'Вы уверены?'})

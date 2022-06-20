@@ -1,0 +1,63 @@
+-content_for :title do
+  Аккаунт на портале Animecult
+%main.page
+  .container-fluid
+    .panel.bg-light
+      %h1 Управление аккаунтом
+      %hr
+      %h3 Изменить никнейм
+      .form-inline
+        .form-group
+          %label.mx-sm-3.font-weight-bold{ for:'nickname' } Никнейм
+        .form-group
+          %input.form-control.mx-sm-3#nickname{ name:'nickname', placeholder: 'Должен быть уникальным', size: 50, value: current_user.nickname }
+        .form-group
+          %button.btn.btn-success.mx-sm-3#change-nickname Изменить
+      %hr
+      %h3 Редактировать пароль для входа на сайт
+      =form_tag(update_password_account_index_path, method: :post) do
+        .form-inline
+          .form-group
+            %label.mx-sm-3.font-weight-bold{ for: 'email' } Email
+            %input.mx-sm-3.form-control{ type: 'email', name:'email', placeholder: 'Ваш email', size: 30, value: current_user.email }
+          .form-group
+            %label.mx-sm-3.font-weight-bold{ for: 'password' } Пароль
+            %input.form-control.mx-sm-3{ type: 'password', name: 'password', size: 30 }
+          .form-group
+            %input.btn.btn-success.mx-sm-3{ type:'submit', value: 'Изменить' }
+      %hr
+      %h3 Ваши соцсети
+      .row
+        .col-12.user-social-networks
+          -providers.each_pair do |key, data|
+            -social_network = @user_social_networks.find { |usn| usn.provider == key.to_s }
+            -if social_network.present?
+              -provider_title = "#{data[:key].humanize} (#{social_network.uid})"
+              %a.btn.btn-block.btn-social.remove{ href: omniauth_authorize_path('user', key), class:"btn-#{data[:key]}", 'data-provider-key' => social_network.provider, 'data-provider-title' =>provider_title, 'data-success-text' => data[:title], 'data-provider-remove' => 'false' }
+                %span.fa{ class: "fa-#{data[:key]}" }
+                %span.title="Вход выполнен: #{provider_title})"
+            -else
+              %a.btn.btn-block.btn-social{href: omniauth_authorize_path('user', key), class: "btn-#{data[:key]}" }
+                %span.fa{ class: "fa-#{data[:key]}" }
+                %span.title=data[:title]
+
+      -if @notifications.present?
+        %hr
+        %h3{ style: 'margin-top:30px;' } Уведомления
+        %table.table#notifications
+          %thead
+            %tr
+              %th Событие
+              %th Объект
+              %th Время
+              %th Действие
+          %tbody
+            -@notifications.each do |notification|
+              %tr{ 'data-id': notification.id }
+                %td=notification.title
+                %td=link_to(notification.correctable.title, get_pass(notification.correctable))
+                %td=time_ago_in_words(notification.created_at)
+                %td
+                  %button.notification-read.btn-sm.btn-primary Убрать
+                  -unless notification.shown?
+                    %span.badge.badge-success Новое

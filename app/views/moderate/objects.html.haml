@@ -1,0 +1,59 @@
+-content_for :title do
+  Модерация объектов
+%main.page
+  .container-fluid
+    .panel.bg-light
+      -if @object_type.blank?
+        %h1.heading Неверный тип объекта
+      -else
+        %h1.heading
+          ="Утверждение объектов: #{(Revision::ALLOWED_TYPES[@object_type])::NAME}"
+          -unless @include_cancelled
+            =link_to('Удаленные',objects_moderate_index_path(include_cancelled:1,object_type:@object_type))
+        -unless @objects.blank?
+          %table.table#objects
+            %thead
+              %tr
+                %th=(Revision::ALLOWED_TYPES[@object_type])::NAME
+                %th Автор
+                %th Утверждение
+                %th Блокировка
+            %body
+              -@objects.each do |object|
+                %tr
+                  %td
+                    -if object.class==Serial
+                      =link_to(object.title,serial_path(object.transliterated_link))
+                    -elsif object.class==Element
+                      =link_to(object.title,set_path(object))
+                    -elsif object.class==Chapter
+                      -unless object.serial.blank?
+                        =link_to("##{object.chapter_id}",serial_episode_path(object.serial.transliterated_link,object.chapter_id))
+                    -elsif object.class==Song
+                      =link_to(object.title,song_path(object.link))
+                    -elsif object.class==Character
+                      =link_to(object.title,character_path(object.link))
+                    -elsif object.class==Creator
+                      =link_to(object.title,creator_path(object.link))
+                    -elsif object.class==Review
+                      =link_to(object.title,review_path(object.id))
+                    -elsif object.class==New
+                      =link_to(object.title,news_path(object.link))
+                    -elsif object.class==ChapterLink
+                      -unless object.chapter.blank? && object.chapter.serial.blank?
+                        =link_to(object.link,serial_episode_path(object.chapter.serial.transliterated_link,object.chapter.chapter_id))
+                    -elsif object.class==Video
+                      -unless object.serial.blank?
+                        =link_to(object.video_url,serial_episode_path(object.serial.transliterated_link,object.chapter_id))
+                    -else
+                      %strong Неизвестный объект
+                  %td=object.account.blank? ? '' : object.account.full_title
+                  %td
+                    =link_to('Принять',do_action_moderate_index_path(action_type: :do_apply,object_type: object.class,object_id: object.id),method: :post)
+                  %td
+                    -if object.is_cancelled?
+                      =link_to('Вернуть',do_action_moderate_index_path(action_type: :undo_cancel,object_type: object.class,object_id: object.id),method: :post)
+                    -else
+                      =link_to('Блокировать',do_action_moderate_index_path(action_type: :do_cancel,object_type: object.class,object_id: object.id),method: :post)
+
+

@@ -1,0 +1,20 @@
+.anime-items
+  .row
+    -serials.each do |serial|
+      .col-12.col-sm-6.col-md-4.col-lg-2
+        %a.anime-item.anime{href: serial_path(serial.clear_link)}
+          .anime-top
+            %span.badge-type13-special=serial.small_title(20)
+          .anime-body
+            .anime-visual
+              .anime-visual-inner
+                .anime-img-box
+                  %img.anime-img{src:serial.attachments.any? ? serial.attachments[0].cover_url : image_path('404.jpg')}
+            .anime-content
+              %strong Жанры:
+              =smallize(serial.genres_string,200)
+              %br
+              %strong Тип:
+              =smallize(serial.category_string,200)
+              %br
+              ="#{serial.total_cached_text} | #{serial.release} год"

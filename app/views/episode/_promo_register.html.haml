@@ -1,0 +1,13 @@
+#promo-register.modal.fade{'aria-hidden': "true"}
+  .modal-dialog.modal-xl
+    .modal-content
+      .modal-header
+        %h2.heading.heading-2
+          Объявление
+        %button.close{'data-dismiss': "modal", 'aria-label': "Close"}
+          %span{'aria-hidden': "true"}="×"
+      .modal-body{style:'text-align:center;'}
+        %p
+          ЗАРЕГИСТРИРУЙТЕСЬ У НАС НА САЙТЕ
+          %br
+          =link_to('Регистрация',new_user_session_url,style:'font-size:26px;font-weight:bold;')

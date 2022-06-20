@@ -1,0 +1,11 @@
+%main.page
+  .container-fluid
+    .panel.bg-light
+
+      %h1.heading
+        Редактирование персонажа
+        =link_to(@character.title,character_path(@character.link))
+
+      =form_for(@character,url: character_path(@character.link)) do |f|
+        =render 'form', f:f
+

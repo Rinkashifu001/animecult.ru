@@ -1,0 +1,99 @@
+-content_for :title do
+  Модерация правки
+%main.page
+  .container-fluid
+    .panel.bg-light
+      %h1.heading
+        =@revision.title
+        -if @revision.correctable.is_a?(Serial)
+          =link_to("##{@revision.correctable.id}",serial_path(@revision.correctable.transliterated_link))
+        -elsif @revision.correctable.is_a?(Chapter) && @revision.correctable.serial.is_a?(Serial)
+          =link_to("##{@revision.correctable.id}",serial_episode_path(@revision.correctable.serial.transliterated_link,@revision.correctable.chapter_id))
+      -if @revision.is_applied
+        %span.badge.badge-success Принята
+      -elsif !@revision.is_cancelled
+        =link_to('Принять',do_apply_revision_path(@revision),method: :post,class:'btn btn-primary', :data => { :confirm => 'Вы уверены?'})
+      -if @revision.is_cancelled
+        %span.badge.badge-error Блокирована
+      -else
+        =link_to('Блокировать',do_cancel_revision_path(@revision),method: :post,class:'btn btn-danger', :data => { :confirm => 'Вы уверены?'})
+      %table.table
+        -if @revision.correctable.is_a?(Serial) && @revision.content_type==Revision::CONTENT_TYPE_SERIAL_ELEMENTS
+          %h3.heading-3 Изменения элементов произведения
+          %thead
+            %tr
+              %th Тип
+              %th Изменения
+          %tbody
+            -@elements.each_pair do |elem_type,dataset|
+              %tr
+                %th=dataset[:title]
+                %td
+                  -dataset[:values].sort_by{|value| value[:action]==:add ? 1 : 0}.each do |value|
+                    %span.badge{class:value[:action]==:add ? 'badge-primary' : 'badge-alert'}=value[:elem].title
+        -elsif @revision.correctable.is_a?(Serial) && @revision.content_type==Revision::CONTENT_TYPE_SERIAL_SONGS
+          %h3.heading-3 Изменения песен произведения
+          %thead
+            %tr
+              %th Тип
+              %th Изменения
+          %tbody
+            -@songs.each_pair do |relation_id,dataset|
+              %tr
+                %th=dataset[:title]
+                %td
+                  -dataset[:values].sort_by{|value| value[:action]==:add ? 1 : 0}.each do |value|
+                    %span.badge{class:value[:action]==:add ? 'badge-primary' : 'badge-alert'}=value[:song].title
+        -elsif @revision.correctable.is_a?(Serial) && @revision.content_type==Revision::CONTENT_TYPE_SERIAL_CHARACTERS
+          %h3.heading-3 Изменения персонажей произведения
+          %thead
+            %tr
+              %th Тип
+              %th Изменения
+          %tbody
+            -@characters.each_pair do |category,dataset|
+              %tr
+                %th=dataset[:title]
+                %td
+                  -dataset[:values].sort_by{|value| value[:action]==:add ? 1 : 0}.each do |value|
+                    %span.badge{class:value[:action]==:add ? 'badge-primary' : 'badge-alert'}
+                      ="#{value[:character].title} (#{value[:creator].title})"
+        -elsif @revision.correctable.is_a?(Serial) && @revision.content_type==Revision::CONTENT_TYPE_SERIAL_CREATORS
+          %h3.heading-3 Изменения персонала произведения
+          %thead
+            %tr
+              %th Изменения
+          %tbody
+            -@creators.each do |item|
+              %tr
+                %td
+                  %span.badge{class:item[:action]==:add ? 'badge-primary' : 'badge-alert'}
+                    ="#{item[:creator].title} (#{item[:credit].title})"
+        -elsif @revision.correctable.is_a?(Song) && @revision.content_type==Revision::CONTENT_TYPE_SONG_STUFFS
+          %h3.heading-3 Изменения персонала песни
+          %thead
+            %tr
+              %th Изменения
+          %tbody
+            -@stuff.each do |item|
+              %tr
+                %td
+                  %span.badge{class:item[:action]==:add ? 'badge-primary' : 'badge-alert'}
+                    ="#{item[:creator].title} (#{item[:credit].title})"
+        -else
+          %thead
+            %tr
+              %th Поле
+              %th Сейчас
+              %th Изменение
+          %tbody
+            -@revision.body.each do |field,value|
+              %tr
+                %td=@revision.correctable.class::EDITABLE_FIELDS[field.to_sym]
+                %td=show_revision_value(@revision.correctable.send(field),@revision.correctable.send(field))
+                %td
+                  -if @revision.content_type==Revision::CONTENT_TYPE_DEFAULT
+                    =show_revision_value(value,@revision.correctable.send(field))
+
+
+

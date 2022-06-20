@@ -1,0 +1,8 @@
+%main.page
+  .container-fluid
+    .panel.bg-light
+
+      %h1.heading
+        Создание новости
+      =form_for @new, url: news_index_path, html: {multipart: true} do |f|
+        =render 'form', f:f

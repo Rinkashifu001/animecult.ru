@@ -1,0 +1,67 @@
+-content_for :title do
+  =@creator.seo_title
+-content_for :description do
+  =@creator.seo_description
+%main.page
+  .container-fluid
+    =render partial: 'fragments/adv/legal/adv_block'
+    .panel.bg-light
+      %h1=@creator.seo_title
+      -if user_signed_in?
+        .admin-nav
+          %a.btn.btn-sm.btn-warning{href: edit_creator_path(@creator.link)} Редактировать
+      .serial-info
+        .row
+          .serial-info-left.col-12.col-md-5.col-lg-4
+            =render partial: 'fragments/html/attachments_carousel', locals: {attachments: @creator.attachments.select(&:is_applied)}
+          .serial-info-right.col-12.col-md-7.col-lg-8
+            .serial-info-rows
+              =render partial: 'fragments/html/moderation_status_rows', locals: {obj:@creator}
+              .serial-info-row
+                .serial-info-name=Creator::EDITABLE_FIELDS[:title_translated]
+                .serial-info-value=@creator.title_translated
+              .serial-info-row
+                .serial-info-name=Creator::EDITABLE_FIELDS[:description]
+                .serial-info-value=@creator.description.to_s.html_safe
+          .serial-info-right.col-12
+            .serial-info-rows
+              -unless @creator.creator_participates.blank?
+                %h2 Создание аниме:
+                -@creator.creator_participates.sort_by{|cp |cp.credit.title}.each do |cp|
+                  -if !cp.credit.blank? && !cp.serial.blank?
+                    .serial-info-row
+                      .serial-info-name-expanded=cp.credit.title
+                      .serial-info-value=link_to(cp.serial.title,serial_path(cp.serial.transliterated_link))
+              -unless @creator.character_participates.blank?
+                %h2 Сэйю в аниме
+                -@creator.character_participates.sort_by{|cp |cp.category_title}.each do |cp|
+                  .row
+                    .col-6
+                      %a{href:serial_path(cp.serial.transliterated_link)}
+                        =cp.serial.title
+                        %br
+                        -unless cp.serial.attachments.blank?
+                          %img.character-icon2{src: cp.serial.attachments[0].cover_url}
+                    .col-6
+                      -unless cp.character.link.blank?
+                        %a{href:character_path(cp.character.link)}
+                          =cp.character.title
+                          %br
+                          -unless cp.character.attachments.blank?
+                            =image_tag(cp.character.attachments[0].cover_url,class:'character-icon2')
+              -unless @creator.song_stuffs.blank?
+                %h2 Создание аниме песен
+                -@creator.song_stuffs{|sp| sp.credit.title}.each_with_index do |sp,index|
+                  .serial-info-row
+                    .serial-info-name-expanded="#{sp.credit.title_translated.blank? ? sp.credit.title : sp.credit.title_translated}:"
+                    .serial-info-value=link_to(sp.song.title,song_path(sp.song.link))
+              .panel.bg-light=commontator_thread(@creator)
+              -unless @creator.description_elements.blank?
+                %h2 О человеке
+                -@creator.description_elements.each do |de|
+                  .serial-info-row
+                    .serial-info-name-expanded="#{de.title_translated.blank? ? de.title : de.title_translated}:"
+                    .serial-info-value
+                      -t = de.tags
+                      -de.tags.each_with_index do |tag,index|
+                        ="#{link_to(tag.title,tag_path(tag))}#{t.size==index+1 ? '' : ','}".html_safe

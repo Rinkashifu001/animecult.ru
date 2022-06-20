@@ -1,0 +1,21 @@
+-content_for :title do
+  =t(".title#{@page>1 ? '_2' : ''}",page:@page)
+-content_for :description do
+  =t(".description#{@page>1 ? '_2' : ''}",page:@page)
+=content_for(:next_page) do
+  =special_page_link(@authors,:next_page)
+=content_for(:previous_page) do
+  =special_page_link(@authors,:previous_page)
+
+%main.page
+  .container-fluid
+    =render partial: 'fragments/adv/legal/adv_block'
+    .panel.bg-light
+
+      %h1.heading=t(".h1#{@page>1 ? '_2' : ''}",page:@page)
+
+      .anime-list
+        -@authors.each do |author|
+          %a.anime-list-item{href: author_path(author.element_link)}=author.title
+
+      =paginate @authors

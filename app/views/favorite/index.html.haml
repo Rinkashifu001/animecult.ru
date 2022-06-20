@@ -1,0 +1,35 @@
+-content_for :title do
+  ="Закладки пользователя #{current_user.show_title}"
+-content_for :description do
+  ="Закладки пользователя #{current_user.show_title}"
+
+%main.page
+  .container-fluid
+    =render partial: 'fragments/adv/legal/adv_block'
+    .panel.bg-light
+
+      %h1="Закладки пользователя #{current_user.show_title}"
+
+      %ul.nav.nav-tabs#favoriteTab{role:'tablist'}
+        -@favorite_scopes.each_pair do |scope,title|
+          %li.nav-item{role:'presentation'}
+            %a.nav-link{class:scope==:favorited ? 'active' : '',id:"#{scope}_tab",'data-toggle':'tab',href:"##{scope}",role:'tab','aria-controls':scope,'aria-selected':scope==:favorited ? 'true' : 'false'}=title
+      .tab-content#favoriteTabList
+        -@favorite_scopes.each_pair do |scope,title|
+          .tab-pane.fade{class:scope==:favorited ? 'show active' : '',id:scope,role:'tabpanel','aria-labelledby':"#{scope}_tab"}
+            -favorites = @favorites.select{|f| f.scope==scope.to_s}
+            -if favorites.blank?
+              %h3 Пока нет закладок
+            -else
+              %table.table
+                %thead
+                  %tr
+                    %th Произведение
+                    %th Комментарий
+                    %th Эпизод
+                %tbody
+                  -favorites.each do |f|
+                    %tr
+                      %td=link_to(f.favoritable.show_title,get_pass(f.favoritable))
+                      %td=f.title
+                      %td=f.chapter_id.to_i.zero? ? '' : f.chapter_id

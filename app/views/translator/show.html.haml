@@ -1,0 +1,25 @@
+-content_for :title do
+  =t(".title#{@page>1 ? '_2' : ''}",page:@page,title:@translator.title)
+-content_for :description do
+  =t(".description#{@page>1 ? '_2' : ''}",page:@page,title:@translator.title)
+=content_for(:next_page) do
+  =special_page_link(@serials,:next_page)
+=content_for(:previous_page) do
+  =special_page_link(@serials,:previous_page)
+
+
+%main.page
+  .container-fluid
+    .panel.bg-light
+
+      %h1.heading=t(".h1#{@page>1 ? '_2' : ''}",page:@page,title:@translator.title)
+      .anime-show
+        .row
+          .anime-show-left.col-12.col-md-5.col-lg-4
+            =render partial: 'fragments/haml/preview_carousel', locals: {serials: @serials}
+
+      -if @serials.any?
+        %h2.heading.heading-2=t('.h2',title:@translator.title)
+        =render partial: 'fragments/haml/anime_list',locals: {serials:@serials}
+
+        =paginate @serials

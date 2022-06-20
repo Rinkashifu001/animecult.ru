@@ -1,0 +1,7 @@
+%main.page
+  .container-fluid
+    .panel.bg-light
+
+      %h1.heading Создание песни
+      =form_for @song, url: song_index_path, html: {multipart: true} do |f|
+        =render 'form', f:f

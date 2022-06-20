@@ -1,0 +1,30 @@
+-title = @page<=1 ? 'Обзоры и Рецензии на аниме' : "Страница №#{@page} Обзоры и Рецензии на аниме"
+-content_for :title do
+  =title
+-content_for :description do
+  =@page<=1 ? 'Обзоры и рецензии на аниме от пользователей Анимекульта' : "Страница №#{@page} обзоров и рецензий на аниме от пользователей Анимекульта"
+
+%main.page
+  .container-fluid
+    =render partial: 'fragments/adv/legal/adv_block'
+    .panel.bg-light
+
+      %h1.heading=title
+      .anime-items
+        .row
+          -@reviews.each do |review|
+            .col-12.col-sm-6.col-md-4.col-lg-3
+              %a.anime-item.anime.anime_theme_2{href:review_path(review)}
+                -unless review.serial.blank?
+                  .anime-top
+                    %span.badge-type13-special=review.serial.small_title
+                .anime-body
+                  .anime-visual
+                    .anime-visual-inner
+                      .anime-img-box
+                        -unless review.attachments.blank?
+                          %img.anime-img{src:review.attachments.first.cover_url}
+                  .anime-content
+                    =review.title
+
+      .pagination=will_paginate(@reviews)

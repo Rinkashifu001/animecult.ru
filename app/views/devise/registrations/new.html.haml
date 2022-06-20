@@ -1,0 +1,28 @@
+-content_for :title do
+  Регистрация на АнимеКульт
+%main.page
+  .container-fluid
+    .panel.bg-light
+
+      .row.justify-content-center
+        .col-12.col-sm-8.col-md-6.col-lg-4
+          %legend Регистрация
+          =form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+            =devise_error_messages!
+            .form-group
+              .field
+                =f.label :email, 'Электронная почта'
+                =f.email_field :email, class: 'form-control', autofocus: true
+
+            .form-group
+              .field
+                =f.label :password, 'Пароль'
+                =f.password_field :password, class: 'form-control'
+
+            .form-group
+              .field
+                =f.label :password_confirmation, 'Подтверждение пароля'
+                =f.password_field :password_confirmation, class: 'form-control'
+
+            .form-group
+              =f.submit 'Отправить', class: "btn btn-success btn-wide"

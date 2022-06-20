@@ -1,0 +1,11 @@
+%main.page
+  .container-fluid
+    .panel.bg-light
+
+      %h1.heading
+        Редактирование персонала
+        =link_to(@creator.title,creator_path(@creator.link))
+
+      =form_for(@creator,url: creator_path(@creator.link)) do |f|
+        =render 'form', f:f
+

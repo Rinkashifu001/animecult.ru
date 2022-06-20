@@ -1,0 +1,34 @@
+-content_for :title do
+  =@personal.seo_title
+-content_for :description do
+  =@personal.seo_title
+%main.page
+  .container-fluid
+    =render partial: 'fragments/adv/legal/adv_block'
+    .panel.bg-light
+
+      %h1=@personal.seo_title
+
+      -if @videos.any?
+
+        .serials.accordion#videos-list{style:'margin-top:0px;'}
+
+          -@videos.each_with_index do |video,index|
+
+            .serial
+              .serial-btn{"data-target": "#panel#{video.id}", "data-toggle": "collapse", "aria-expanded": "true", "aria-controls": "collapseOne", "data-id": video.id,"data-code":@personal.code}
+                .row.align-items-center
+                  .serial-source.col-12.col-sm-2.col-lg-1
+                    %img.serial-source-img{src: image_path(video.source_image)}
+                  .serial-translator.col-12.col-sm-5.col-md-6.col-lg-7
+                    -video_details(video.details).each do |detail|
+                      %img.serial-translator-img{src: image_path("#{detail}.jpg")}
+                    -if video.translator
+                      %span.serial-translator-title=video.translator.title
+                  .serial-date.col-12.col-sm-5.col-md-4
+                    =t('.video_date')
+                    %b=video.video_date.strftime('%d.%m.%Y')
+
+              .serial-content.collapse{id: "panel#{video.id}", "data-parent": "#videos-list"}
+
+                .serial-video{id: "video#{video.id}"}

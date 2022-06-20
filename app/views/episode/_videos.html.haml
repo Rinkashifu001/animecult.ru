@@ -1,0 +1,21 @@
+-unless videos.blank?
+  .serials.accordion#videos-list{style:'margin-top:0px;'}
+    -videos.each_with_index do |video,index|
+      .serial
+        .serial-btn{"data-target": "#panel#{video.id}", "data-toggle": "collapse", "aria-expanded": "true", "aria-controls": "collapseOne", "data-id": video.id}
+          .row.align-items-center
+            .serial-source.col-12.col-sm-2.col-lg-1
+              %img.serial-source-img{src: image_path(video.source_image)}
+            .serial-translator.col-12.col-sm-5.col-md-6.col-lg-7
+              -video_details(video.details).each do |detail|
+                %img.serial-translator-img{src: image_path("#{detail}.jpg")}
+              -if user_signed_in? && current_user.moderation_available? && video.link==Video::LINK_WEBSITE
+                .badge.badge-success=Video::LINK_WEBSITE
+              -if video.translator
+                %span.serial-translator-title=video.translator.title
+            .serial-date.col-12.col-sm-5.col-md-4
+              %b=video.video_date.strftime('%d.%m.%Y')
+        .serial-content.collapse{id: "panel#{video.id}", "data-parent": "#videos-list"}
+          -if user_signed_in? && current_user.moderation_available? && video.link==Video::LINK_WEBSITE
+            =link_to('Отменить',cancel_chapter_video_serial_episode_path(video_id:video.id),method: :post,class: 'btn btn-sm btn-danger', :data => { :confirm => 'Вы уверены?'})
+          .serial-video{id: "video#{video.id}"}

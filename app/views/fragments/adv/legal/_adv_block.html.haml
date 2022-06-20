@@ -1,0 +1,4 @@
+- @admin_data = AdminData.first
+- if Adblock.allowed?(request.path)
+  #adv-block-desktop.adv-block-desktop=@admin_data.adv_desktop.html_safe
+  #adv-block-mobile.adv-block-mobile=@admin_data.adv_mobile.html_safe

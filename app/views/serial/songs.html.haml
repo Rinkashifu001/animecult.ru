@@ -1,0 +1,25 @@
+-content_for :title do
+  =@serial.seo_title_songs
+-content_for :description do
+  ="Все песни и вся музыка аниме #{@serial.title}"
+%main.page
+  .container-fluid
+    .panel.bg-light
+      %h1
+        Песни и Музыка аниме
+        =link_to(@serial.title,serial_path(@serial.clear_link))
+        .serial-info-rows
+          -relation_title = ''
+          -@serial.song_participates.sort_by{|sp| [sp.relation_id,sp.song.title]}.each_with_index do |sp,index|
+            -unless relation_title==sp.relation_title
+              %h2=sp.relation_title
+              -relation_title = sp.relation_title
+            .serial-info-row
+              .serial-info-name-expanded
+                %h3=link_to(sp.song.title,song_path(sp.song.link))
+              .serial-info-value
+                -sp.song.song_stuffs.each_with_index do |ss,index|
+                  -unless index.zero?
+                    ,
+                  ="#{ss.credit.title_translated}:"
+                  =link_to(ss.creator.title,creator_path(ss.creator.link))

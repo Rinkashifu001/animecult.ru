@@ -1,0 +1,143 @@
+%html
+  %head
+    %title="#{seo_title}#{yield(:title)}"
+
+    -if description_required?
+      <meta name='description' content="#{(yield :description).blank? ? t('description') : (yield :description).strip}">
+    %link{href:feeds_path,rel:'altername',title:'RSS feed',type:'application/rss+xml'}
+
+    =csrf_meta_tags
+
+
+
+    =stylesheet_link_tag "application", media: "all"
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    =favicon_link_tag 'favicon.ico'
+
+    %script{src:'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'}
+    %script{src:"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"}
+
+
+  %body{'data-controller':controller_name,'data-user-id':user_signed_in? ? current_user.id : 0}
+
+    .page-wrapper
+
+      -if controller_name=='search'
+        #about.modal.fade{'aria-hidden': "true"}
+          .modal-dialog.modal-xl
+            .modal-content
+              .modal-header
+                %h2.heading.heading-2
+                  -if @release_v1==@release_v2
+                    =t('search.index.title_release',release:@release_v1)
+                  -else
+                    -if @page>1
+                      =t('search.index.title_2',page:@page)
+                    -else
+                      =t 'search.index.h2'
+                %button.close{'data-dismiss': "modal", 'aria-label': "Close"}
+                  %span{'aria-hidden': "true"}="×"
+              .modal-body
+                %p=t 'search.index.description'
+              .modal-footer
+                %button.btn.btn-secondary{'data-dismiss': "modal"}="Закрыть"
+
+      %header.header.bg-dark
+
+        %a.header-logo.logo{href: '/'}
+          =image_tag('logo1.png', class: 'logo-img', alt: 'Animecult')
+
+        .header-nav-btn.nav-btn
+          %span
+          %span
+          %span
+          %span
+
+        .header-box
+          .header-box-inner
+
+            %form.header-search.search{action:'/'}
+              .input-group
+                %input.form-control.form-control-sm{name:'key',placeholder:'Поиск...',size:20}
+                .input-group-append
+                  %input.btn.btn-sm.btn-primary{type:'submit',value:'Искать'}
+
+            %ul.header-nav.nav
+
+              -if controller_name=='search'
+                %li.nav-item
+                  %a.nav-link{href: '#', 'data-toggle': "modal", 'data-target': "#about"}=t('about_a')
+
+              %li.nav-item
+                %a.nav-link{href:anime_list_index_path, class:%W[anime_list genre author director category studio translator].include?(controller_name) ? 'active' : ''}=t('list')
+              %li.nav-item
+                %a.nav-link{href:news_index_path, class:controller_name=='news' ? 'active' : ''}='Новости'
+              %li.nav-item
+                %a.nav-link{href:review_index_path, class:controller_name=='review' ? 'active' : ''}='Рецензии'
+
+              -if user_signed_in?
+                %li.nav-item
+                  %a.nav-link{href:favorite_index_path} Закладки
+                -if current_user.is_admin?
+                  %li.nav-item
+                    %a.nav-link{href:comment_tool_index_path}='Комменты'
+                -if current_user.moderation_available?
+                  %li.nav-item
+                    %a.nav-link{href:moderate_index_path}='Модерация'
+                -if current_user.is_admin?
+                  %li.nav-item
+                    %a.nav-link{href:admin_index_path} Админка
+                %li.nav-item
+                  %a.nav-link{href:account_index_path}
+                    Профиль
+                    -if current_user.active_notifications.size.positive?
+                      %span.badge.badge-pill.badge-alert=current_user.active_notifications.size
+                %li.nav-item
+                  =link_to 'Выход',destroy_user_session_path, method: :delete, class:['nav-link']
+              -else
+                %li.nav-item
+                  %a.nav-link{ href: new_user_session_url } Вход
+
+      .container-fluid#notice_wrapper{class:(alert.blank? && notice.blank?) ? 'hidden' : ''}
+        .alert.alert-primary{role:'alert'}
+          =alert
+          =notice
+      =yield
+
+      %script{src:'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.js'}
+      %script{src:'https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.0.2/nouislider.min.js'}
+      -if !['search','anime_list'].include?(controller_name) && action_name!='show'
+        %script{src:'https://cdn.jsdelivr.net/npm/froala-editor@3.0.5/js/froala_editor.pkgd.min.js'}
+      %script{src:"https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"}
+      %script{src:"https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"}
+
+      %script{src:"https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@v2.3.7/dist/latest/bootstrap-autocomplete.min.js"}
+
+
+      =javascript_include_tag "application"
+      :javascript
+        jQuery('head').append("<link href='https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.0.2/nouislider.min.css' rel='stylesheet' type='text/css'>");
+        jQuery('head').append("<link href='https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/tiny-slider.css' rel='stylesheet' type='text/css'>");
+        jQuery('head').append("<link href='https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css' rel='stylesheet' type='text/css'>");
+      -if !['search','anime_list'].include?(controller_name) && action_name!='show'
+        :javascript
+          jQuery('head').append("<link href='https://cdn.jsdelivr.net/npm/froala-editor@3.0.5/css/froala_editor.pkgd.min.css' rel='stylesheet' type='text/css'>");
+
+
+
+      %footer.footer.bg-dark.text-white
+        .copyright
+          © 2013-2020 DSA group.
+          %a{href:copyright_holders_public_index_path} Для правообладателей.
+          %a{href:user_agreement_public_index_path} Пользовательское соглашение.
+          -unless request.domain=='animecult.org'
+            %a{href:'https://animecult.org',title:'просмотр аниме онлайн'} Смотреть аниме онлайн!
+
+        -if request.domain.split('.')[-1]=='ru'
+          =render 'fragments/analytics/mail_ru'
+        -elsif request.domain.split('.')[-1]=='me'
+          =render 'fragments/analytics/mail_me'
+        -else
+          =render 'fragments/analytics/ym'

@@ -1,0 +1,29 @@
+<%-data.each_with_index do |pair,index|%>
+<div class="col-12 col-sm-6 col-md-4 col-lg-3">
+    <a class="anime-item anime" href="<%=serial_path(serials.select{|x| x.id==pair[0]}[0].clear_link)%>">
+        <div class="anime-top">
+            <%=render partial: 'fragments/haml/anime_list',locals: {serial_id:pair[0],results:data} %>
+            <%unless serials.select{|x| x.id==pair[0]}[0].release.zero?%>
+                <span class='anime-badge badge badge-type13'><%=serials.select{|x| x.id==pair[0]}[0].release%></span>
+            <%end%>
+        </div>
+        <div class="anime-body">
+            <div class="anime-visual">
+                <div class="anime-visual-inner">
+                    <div class="anime-img-box">
+                        <img class="anime-img" src="<%=Rails.env=='development' ? 'http://animecult.ru/images/6589_1_wm.jpg' : image_path("/images/#{pair[0]}_1_wm.jpg") %>" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="anime-content">
+                <%-if @field=='english_title' %>
+                    <%=serial_preview(serials.select{|x| x.id==pair[0]}[0].english_title,pair[1]['elements'].map{|e| e[:title]}).html_safe %>
+                <%-else %>
+                    <%=serial_preview(serials.select{|x| x.id==pair[0]}[0].title,pair[1]['elements'].map{|e| e[:title]}).html_safe %>
+                <%-end %>
+            </div>
+        </div>
+    </a>
+</div>
+
+<%-end %>

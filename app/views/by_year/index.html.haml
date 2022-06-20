@@ -1,0 +1,15 @@
+-content_for :title do
+  =t(".title")
+-content_for :description do
+  =t(".description")
+
+%main.page
+  .container-fluid
+    =render partial: 'fragments/adv/legal/adv_block'
+    .panel.bg-light
+
+      %h1.heading=t(".h1")
+
+      .anime-list
+        -@years.each do |year|
+          %a.anime-list-item{href: anime_list_index_path(search_key:year)}=year

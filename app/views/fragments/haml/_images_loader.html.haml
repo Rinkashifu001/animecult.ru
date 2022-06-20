@@ -1,0 +1,8 @@
+#images_loader{'data-object-id':object.id,'data-object-type':object.class.to_s.downcase}
+  %label.btn.btn-success#images_loader_label{for:'images_loader_input'} Добавить картинки
+  %input#images_loader_input{type:'file',multiple:'true'}
+  #loaded_images
+    -object.attachments.each do |a|
+      =image_tag(a.cover_url,style:'height:65',class:a.is_applied? ? '' : 'attachment-is-not-applied')
+      -unless current_user.only_could_revise?
+        %button.btn.btn-danger.remove-attachment{'data-id':a.id} X

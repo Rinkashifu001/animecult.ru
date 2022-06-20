@@ -1,0 +1,40 @@
+-content_for :title do
+  Модерация правок
+
+%main.page
+  .container-fluid
+    .panel.bg-light
+      %h1.heading Правки пользователей
+      -if @revisions.blank?
+        %h3.heading Правки отсутствуют
+      -else
+        %table.table#revisions
+          %thead
+            %tr
+              %th Объект
+              %th Автор
+              %th Просмотр
+              %th Утверждение
+              %th Блокировка
+          %body
+            -@revisions.each do |revision|
+              %tr
+                %td
+                  -if revision.correctable.blank?
+                    %strong УДАЛЕН
+                  -else
+                    %strong=revision.correctable.class::NAME
+                    -if revision.correctable.is_a?(Serial)
+                      =link_to(revision.correctable.title,serial_path(revision.correctable.transliterated_link))
+                    -elsif revision.correctable.is_a?(Chapter)
+                      =link_to("#{revision.correctable.serial.title} ##{revision.correctable.chapter_id}",serial_episode_path(serial_id:revision.correctable.serial.transliterated_link,id:revision.correctable.chapter_id))
+                    -elsif revision.correctable.is_a?(Element)
+                      =link_to("#{revision.correctable.type_title}: #{revision.correctable.title}",set_path(revision.correctable))
+                %td
+                  -if revision.user.blank?
+                    %strong ПОЛЬЗОВАТЕЛЬ УДАЛЕН
+                  -else
+                    =revision.user.show_title
+                %td=link_to("Правка #{revision.id}",revision_path(revision))
+                %td=link_to('Принять',do_apply_revision_path(revision),method: :post, :data => { :confirm => 'Вы уверены?'})
+                %td=link_to('Блокировать',do_cancel_revision_path(revision),method: :post, :data => { :confirm => 'Вы уверены?'})

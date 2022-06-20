@@ -1,0 +1,101 @@
+%main.page
+  .container-fluid
+    .panel.bg-light
+
+      %h1.heading
+        Редактирование аниме
+        =link_to(@serial.title,serial_path(@serial.transliterated_link))
+
+      =form_for(@serial) do |f|
+        =render 'form', f:f
+
+        %h3.heading-3 Элементы произведения
+        %input.form-control#serial_element_search{placeholder:'Вводите название элемента для поиска...'}
+        .row.align-items-center
+          .col.text-right
+            %a.btn.btn-secondary{href:new_element_path,target: '_blank'} К созданию элемента
+        -Element::TITLES.each_pair do |elem_type,title|
+          %div{id:"serial_elements_#{elem_type}"}
+            %strong="#{title}:"
+            -@serial.elements_by_elem_type[elem_type].each do |element|
+              %span.serial-element-block{'data-id':element.id}
+                =element.title
+                %a.remove-link{href:'#'}
+                  %span.badge.badge-alert X
+        %input.serial-hidden#serial_elements{name:'serial_elements',value:@serial.serial_elements.map(&:element_id).sort.join(',')}
+
+        %br
+        %h3.heading-3 Саундтрек
+        .row
+          .col-4
+            %select.form-control#song_relation
+              -SongParticipate::SONG_RELATIONS.each_pair do |song_relation,title|
+                %option{value:song_relation,default: song_relation==1}=title
+          .col-8
+            %input.form-control#serial_song_search{placeholder:'Вводите название песни для поиска...'}
+        .row.align-items-center
+          .col.text-right
+            %a.btn.btn-secondary{href:new_song_path,target: '_blank'} К созданию песни
+        -SongParticipate::SONG_RELATIONS.each_pair do |relation_id,title|
+          %div{id:"serial_songs_#{relation_id}"}
+            %strong=title
+            -@serial.songs_by_relation_type[relation_id].each do |song|
+              %span.serial-song-block{'data-id':"#{song.id}-#{relation_id}"}
+                ="#{song.title} (#{SongParticipate::SONG_RELATIONS[relation_id]})"
+                %a.remove-link{href:'#'}
+                  %span.badge.badge-alert X
+        %input.serial-hidden#serial_songs{name: :serial_songs,value:@serial.song_participates.map{|sp| "#{sp.song_id}-#{sp.relation_id}"}.join(',')}
+
+        %br
+        %h3.heading-3 Персонажи
+        .row
+          .col-3
+            %select.form-control#character_category
+              -CharacterParticipate::CATEGORY_TITLES.each_pair do |character_category,titles|
+                %option{value:character_category,default: character_category==1}=titles[:single]
+          .col-3
+            %input.form-control#serial_character_search{placeholder:'Укажите персонажа...'}
+          .col-3
+            %input.form-control#serial_character_creator_search{placeholder:'Укажите сэйю...'}
+          .col-3
+            %a.btn.btn-success#add_serial_character{href:'#'} Добавить
+        .row.align-items-center
+          .col.text-right
+            %a.btn.btn-secondary{href:new_character_path,target: '_blank'} К созданию персонажа
+        -CharacterParticipate::CATEGORY_TITLES.each_pair do |category,dataset|
+          %div{id:"serial_characters_#{category}"}
+            %strong=dataset[:single]
+            -@serial.characters_by_category[category].each do |cp|
+              %span.serial-character-block{'data-id':"#{cp[:character].blank? ? '' : cp[:character].id}-#{cp[:creator].blank? ? '' : cp[:creator].id}-#{category}"}
+                ="#{cp[:character].blank? ? '' : cp[:character].title} (#{cp[:creator].blank? ? '' : cp[:creator].title})"
+                %a.remove-link{href:'#'}
+                  %span.badge.badge-alert X
+        %input.serial-hidden#serial_characters{name: :serial_characters,value:@serial.character_participates.map{|cp| "#{cp.character_id}-#{cp.creator_id}-#{cp.category}"}.join(',')}
+
+        %br
+        %h3.heading-3 Создатели
+        .row
+          .col-4
+            %input.form-control#serial_creator_search{placeholder:'Персона...'}
+          .col-4
+            %input.form-control#serial_credit_search{placeholder:'Профессия...'}
+          .col-1
+          .col-3
+            %a.btn.btn-success#add_serial_creator{href:'#'} Добавить
+        .row.align-items-center
+          .col.text-right
+            %a.btn.btn-secondary{href:new_creator_path,target: '_blank'} К созданию персонала
+        #serial_creator_items
+          -@serial.creator_participates.each do |cp|
+            -unless cp.creator.blank?
+              %span.serial-creator-block{'data-id':"#{cp.creator.id}-#{cp.credit.id}"}
+                ="#{cp.creator.title} (#{cp.credit.title})"
+                %a.remove-link{href:'#'}
+                  %span.badge.badge-alert X
+        %input.serial-hidden#serial_creators{name: :serial_creators,value:@serial.creator_participates.select{|cp| !cp.creator.blank?}.map{|cp| "#{cp.creator.id}-#{cp.credit.id}"}.join(',')}
+
+
+        .row.align-items-center
+          .col=link_to 'Назад',serial_path(@serial.clear_link), class: 'btn btn-secondary'
+          .col.text-right=f.submit 'Сохранить', class: 'btn btn-primary'
+

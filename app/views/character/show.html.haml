@@ -1,0 +1,56 @@
+-content_for :title do
+  =@character.seo_title
+-content_for :description do
+  =@character.seo_description
+%main.page
+  .container-fluid
+    =render partial: 'fragments/adv/legal/adv_block'
+    .panel.bg-light
+      %h1=@character.seo_title
+      -if user_signed_in?
+        .admin-nav
+          %a.btn.btn-sm.btn-warning{href: edit_character_path(@character.link)} Редактировать
+      .serial-info
+        .row
+          .serial-info-left.col-12.col-md-5.col-lg-4
+            =render partial: 'fragments/html/attachments_carousel', locals: {attachments: @character.attachments.select(&:is_applied)}
+          .serial-info-right.col-12.col-md-7.col-lg-8
+            .serial-info-rows
+              =render partial: 'fragments/html/moderation_status_rows', locals: {obj:@character}
+              .serial-info-row
+                .serial-info-name=Character::EDITABLE_FIELDS[:description]
+                .serial-info-value=@character.description.to_s.html_safe
+          .serial-info-right.col-12
+            -current_category = 0
+            .serial-info-rows
+              -unless @character.description_elements.blank?
+                %h2 О персонаже
+                -@character.description_elements.each do |de|
+                  -unless de.title_translated.blank?
+                    .row
+                      .col-12.col-md-6="#{de.title_translated}:".html_safe
+                      .col-12.col-md-6
+                        -t = de.tags
+                        -de.tags.each_with_index do |tag,index|
+                          ="#{link_to(tag.title,tag_path(tag))}#{t.size==index+1 ? '' : ','}".html_safe
+                %p
+
+              .panel.bg-light=commontator_thread(@character)
+              -@character.character_participates.sort_by(&:category).each do |cp|
+                -unless current_category==cp.category
+                  -current_category = cp.category
+                  %h2=cp.category_title
+                .row
+                  .col-6
+                    %a{href:serial_path(cp.serial.transliterated_link)}
+                      ="Аниме: #{cp.serial.small_title}"
+                      %br
+                      -unless cp.serial.attachments.blank?
+                        %img.character-icon2{src: cp.serial.attachments[0].cover_url}
+                  -unless cp.creator.blank?
+                    .col-6
+                      %a{href:creator_path(cp.creator.link)}
+                        ="Сэйю: #{cp.creator.title}"
+                        %br
+                        -unless cp.creator.attachments.blank?
+                          =image_tag(cp.creator.attachments[0].cover_url,class:'character-icon2')

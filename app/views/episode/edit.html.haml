@@ -1,0 +1,16 @@
+%main.page
+  .container-fluid
+    .panel.bg-light
+
+      %h1.heading
+        ="Редактирование эпизода #{@chapter.chapter_id} произведения"
+        =link_to(@chapter.serial.title,serial_episode_path(@chapter.serial.transliterated_link,@chapter.chapter_id))
+
+      =form_for @chapter, url: serial_episode_path(@chapter.serial.transliterated_link,@chapter.id) do |f|
+        =render 'form', f:f
+        .row.align-items-center
+          .col=link_to 'Назад',serial_episode_path(@chapter.serial.transliterated_link,@chapter.chapter_id), class: 'btn btn-secondary'
+          -if current_user.moderation_available?
+            .col=link_to 'Удалить',serial_episode_path(@chapter.serial.transliterated_link,@chapter.id),method: :delete, class: 'btn btn-danger', :data => { :confirm => 'Вы уверены?'}
+          .col.text-right=f.submit 'Сохранить', class: 'btn btn-primary'
+

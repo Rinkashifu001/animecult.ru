@@ -1,0 +1,32 @@
+.row
+  .large-12.columns2
+    .panel
+      %h1=t('.h1',{serial:@serial.title})
+      -if flash[:notice]
+        .alert-box{'data-alert'=>true}=flash[:notice]
+      %p
+        %b=t('.original')
+        =@serial.description2
+      %h3=t('.translates')
+      %table
+        %tbody
+          -if user_signed_in?
+            -@serial.translates.order(:description).each do |translate|
+              %tr
+                %td{style:'width:100%'}
+                  -if translate.selected
+                    %b=translate.description
+                  -else
+                    =translate.description
+                %td{style:'width:100px;'}=link_to t('.show'),translate_path(translate)
+                %td{style:'width:100px;'}=link_to t('.edit'),edit_translate_path(id:translate,serial_id:@serial.id)
+          -else
+            %tr
+              %td{style:'width:100%'}
+                %b=@serial.translate.description
+              %td{style:'width:100px;'}=link_to t('.show'),translate_path(@serial.translate)
+      %a{href:new_translate_path(serial_id:@serial.id)}
+        .button.tiny=t('.add_translate')
+      %a{href:serial_path(@serial.clear_link)}
+        .button.tiny.right=t('.back')
+

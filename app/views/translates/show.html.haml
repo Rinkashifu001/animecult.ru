@@ -1,0 +1,15 @@
+.row
+  .large-12.columns2
+    .panel
+      %h1=t('.h1',title:@serial.title)
+      -if flash[:notice]
+        .alert-box{'data-alert'=>true}=flash[:notice]
+      %h3=t('.h3')
+      %p
+        %b=t('.supposed_description')
+        =@serial.description2
+      %p
+        %b=t('.description')
+        =@translate.description
+      %a{href:translate_serial_path(@serial.id)}
+        .button.tiny=t('.back')

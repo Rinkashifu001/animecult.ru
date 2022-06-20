@@ -1,0 +1,24 @@
+-content_for :title do
+  =@review.title
+-content_for :description do
+  =@review.descr_short
+
+%main.page
+  .container-fluid
+    =render partial: 'fragments/adv/legal/adv_block'
+    .panel.bg-light
+
+      .admin-nav
+        %a.btn.btn-sm.btn-warning{href:edit_review_path(@review)}='Редактировать'
+        -if user_signed_in? && current_user.moderation_available?
+          =link_to('Удалить',review_path(@review),method: :delete,class: 'btn btn-sm btn-danger', :data => { :confirm => 'Вы уверены?'})
+
+      %ol.breadcrumb
+        %li.breadcrumb-item
+          %a{href:serial_path(@review.serial.transliterated_link)}=@review.serial.title
+        %li.breadcrumb-item.active
+          =@review.title
+
+      %h1.heading=@review.title
+      .review=@review.descr_full.html_safe
+      .panel.bg-light=commontator_thread(@review)

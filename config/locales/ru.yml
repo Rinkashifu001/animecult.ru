@@ -1,0 +1,740 @@
+ru:
+  main: 'Главная'
+  news: 'Новое'
+  anime: 'Аниме'
+  list: 'Каталог'
+  ongoings: 'Онгоинги'
+  by_the_years: 'По годам'
+  translators: 'Переводчики'
+  genres: 'Жанры'
+  aka: 'Названия'
+  categories: 'Категории'
+  directors: 'Режиссеры'
+  authors: 'Авторы'
+  studios: 'Студии'
+  head_translates: 'Переводы'
+  about_h1: 'Animecult - Смотреть море бесплатного Аниме онлайн!'
+  about_p: 'Наш сайт предоставляет возможность смотреть аниме онлайн совершенно бесплатно!'
+  about_a: 'О нас'
+  image_title: 'Animecult - %{serial_title} скриншот %{screen_no}'
+  image_head: 'Animecult - %{serial_title} картинка %{screen_no}'
+  image_special_alt: 'Аниме - %{serial_title} - картинка %{screen_no}'
+  image_special_title: 'Мультфильм - %{serial_title} - картинка %{screen_no}'
+  image_frame: 'Animecult - %{serial_title} скриншот %{screen_no}'
+  description: 'Добро пожаловать на AnimeCult, сайт посвященный аниме и в первую очередь возможности его посмотреть бесплатно и онлайн, без необходимости скачивать не то что аниме фильмы, но и многосерийные сериалы.
+                На нашем сайте представлена удобная система поиска аниме не только по названиям, но и по жанрам, будь то: яой, фэнтези, аниме с магией или демонами, романтика или драма, трагедия или комедия, а так же по
+                году выпуска и таким условным жанрам как: сёнэн или сёдзё, сэйнэн или дзёсэй, онгоинг или еще не вышедшие(скоро на экранах), а так же по количеству серий: аниме фильм(Movie), 12-13серийный сериал,
+                24-26серийный и те что больше 27 эпизодов. Кроме того, вы всегда можете зайти в наш каталог аниме и ознакомиться с полным списком аниме нашего сайта.
+                Мы искренне надеемся вам понравится наш сайт, где вы сможете смотреть лучшие аниме сериалы и даже узнавать их дату выхода!'
+  not_found: '404: Страница не Найдена | Page not Found'
+  gone: '410: Страница удалена | Gone'
+  show_comments: 'Показать комментарии'
+  posts:
+    h1: 'Новости'
+    sub: 'Интересные факты из мира аниме'
+    title: 'Новости - Animecult'
+  search:
+    index:
+      placeholder: 'Название аниме, автор, режиссер, переводчик, студия...'
+      submit: 'Искать'
+      advanced_search: 'Расширенный поиск'
+      advanced_search_clear: 'Очистить'
+      include: 'Включить'
+      exclude: 'Исключить'
+      table_title: 'Название'
+      table_date: 'Дата'
+      chapter_title: 'Серия %{id}'
+      translate: 'Перевод:'
+      translater_filer: '<b>Внимание:</b> отображены только аниме с переводом от <b>%{title}</b>'
+      title: 'Смотреть аниме и мультики онлайн'
+      h1: 'Мультики и Аниме онлайн'
+      h2: 'О AnimeCult'
+      description: 'Добро пожаловать на AnimeCult – самую большую базу данных аниме в рунете (это мультфильмы с особенным стилем рисовки, изначально оно было уникально для Японии, но с тех пор прошли десятилетия и аниме стало глобальным стилем и сейчас в таком стиле создают мультфильмы и в Южной Корее, и в Китае, и в Европе (Аватар), и в США (Кастлвания), и в России (Первый отряд. Момент истины)). На нашем сайте представлена удобная система поиска аниме не только по названиям, но и по жанрам, будь то: яой, фэнтези, аниме с магией, с демонами или вампирами, романтика или драма, трагедия или комедия, а так же по году выпуска и таким условным жанрам как: сёнэн или сёдзё, сэйнэн или дзёсэй, онгоинг или еще не вышедшие(скоро на экранах), а так же по количеству серий: аниме фильм(Movie), 12-13 серийный сериал, 24-26 серийный и те что больше 27 эпизодов. Кроме этого, вы можете узнать всех кто участвовал в создании того или иного аниме, кто озвучивал каких героев (сэйю), кто исполнял опенинги и эндинги и, конечно же, обсудить и узнать мнение и рекомендации других пользователей.'
+      genre: 'Жанр:'
+      category: 'Категория:'
+      additional: 'Дополнительно:'
+      full_length: 'Полнометражка'
+      adult: 'Для взрослых'
+      total_1: '12-13 серий'
+      total_2: '24-26 серий'
+      total_3: '27+ серий'
+      release: 'Годы выпуска:'
+      tags: 'Выберите тэги'
+      tags_confirm: '<b>Внимание:</b> отображены только аниме с тегами: %{tags}.'
+      ongoings: 'Онгоинги'
+      next: '>'
+      prev: '<'
+      title_2: "Страница %{page} полного списка аниме на АнимеКульт"
+      h1_2: "Страница %{page} списка аниме"
+      description_2: "На странице %{page} вы сможете выбрать аниме из списка по дате его добавления на сайт Анимекульт."
+      title_release: 'Список аниме вышедших в %{release} году'
+      h1_release: 'Список аниме вышедших в %{release} году'
+      description_release: 'Здесь вы сможете найти все аниме, которые вышли в %{release} году.'
+      serial_count_single: 'серия'
+      serial_count_plural: 'серий'
+  serial:
+    movie_type_serial: 'Сериал'
+    movie_type_full: 'Фильм'
+    show:
+      h1: 'Аниме %{serial} %{title}'
+      other_titles: 'Другие названия'
+      serial_count: 'Серий:'
+      full_length_title: 'Тип видео:'
+      full_length_value: 'Полнометражное'
+      release: 'Год выпуска:'
+      description: 'Описание сюжета аниме:'
+      h3_where: 'Серии аниме %{title} и где их посмотреть онлайн?'
+      h3_list: 'Список серий аниме %{title}'
+      serial_title: 'Название серии'
+      serial_date: 'Дата'
+      small_title: 'Смотреть трейлер - %{serial_title}'
+      video_date: 'Добавлен: '
+      translate: 'Перевод: '
+      title: 'Аниме %{serial} %{title} смотреть бесплатно онлайн'
+      meta_description: 'Аниме %{serial} %{title} в жанре: %{genre}. Вы можете узнать всю информацию об этом аниме: дата выхода: %{year}, где его можно посмотреть бесплатно и онлайн, с цензурой или без цензуры,
+                         какие в этом аниме персонажи%{author}%{studio}%{director}, и, конечно, обсудить его с другими зрителями!'
+      description_author_part: ', кто является создателем: %{author}'
+      description_studio_part: ', студии: %{studio}'
+      description_director_part: ', режиссеры: %{director}'
+      associated: 'Список связанных аниме'
+      to_translate: 'Улучшить перевод'
+      main_translate: 'Основной'
+      other_translate: 'Дополнительный'
+      watch_from_start: 'Смотреть с первой серии'
+  anime:
+    movie_type_serial: 'Сериал'
+    movie_type_full: 'Фильм'
+    show:
+      h1: 'Аниме %{serial} %{title}'
+      other_titles: 'Другие названия'
+      serial_count: 'Серий:'
+      release: 'Год выпуска:'
+      description: 'Описание сюжета аниме:'
+      h3: 'Список всех серий аниме %{title}:'
+      serial_title: 'Название серии'
+      serial_date: 'Дата'
+      small_title: 'Смотреть трейлер - %{serial_title}'
+      video_date: 'Добавлен: '
+      translate: 'Перевод: '
+      title: 'Аниме %{serial} %{title} смотреть бесплатно онлайн'
+      meta_description: 'Аниме %{serial} %{title} в жанре: %{genre}. Вы можете узнать всю информацию об этом аниме: дата выхода: %{year}, где его можно посмотреть бесплатно и онлайн, с цензурой или без цензуры,
+                         какие в этом аниме персонажи%{author}%{studio}%{director}, и, конечно, обсудить его с другими зрителями!'
+      description_author_part: ', кто является создателем: %{author}'
+      description_studio_part: ', студии: %{studio}'
+      description_director_part: ', режиссеры: %{director}'
+      associated: 'Список аниме, связанных с %{title}'
+      to_translate: 'Улучшить перевод'
+      main_translate: 'Основной'
+      other_translate: 'Дополнительный'
+      watch_from_start: 'Смотреть с первой серии'
+    translate:
+      h1: 'Улучшить перевод аниме %{serial}'
+      original: 'Оригинал'
+      translates: 'Переводы'
+      main_translate: 'Основной перевод'
+      add_translate: 'Добавить свой перевод'
+      back: 'К аниме'
+      show: 'Показать'
+      edit: 'Править'
+      selected_true: 'Перевод утвержден'
+      selected_false: 'Не удалось подтвердить перевод'
+  translates:
+    index:
+      deleted: 'Перевод удален'
+      delete: 'Удалить'
+      edit: 'Редактировать'
+      serial: 'Аниме'
+      original: 'Оригинал'
+      translate: 'Перевод'
+    new:
+      h1: 'Аниме - %{title}'
+      back: 'Вернуться к аниме'
+      description: 'Описание:'
+      your_description: 'Ваш вариант перевода:'
+      translate_error: 'Перевод не должен быть пустым'
+      translate_complete: 'Перевод должен быть одобрен модератором для отображения'
+      submit: 'Отправить'
+    show:
+      h1: 'Аниме - %{title}'
+      h3: 'Перевод'
+      back: 'Вернуться на страницу аниме'
+      description: 'Описание:'
+      supposed_description: 'Вариант перевода:'
+    edit:
+      h1: 'Аниме - %{title}'
+      description: 'Описание:'
+      selected: 'Утвердить перевод как основной'
+      back: 'Вернуться'
+      submit: 'Отправить'
+  episode:
+    show:
+      h1: 'Аниме %{serial} %{serial_title} - Серия %{chapter_id}'
+      h1_1: 'Аниме %{serial}'
+      h1_2: ' - Серия %{chapter_id}'
+      h2: 'Эпизод %{chapter_id} онлайн: %{chapter_title}'
+      small_title: 'Смотреть %{chapter_id} Серию - %{serial_title}'
+      video_date: 'Добавлена: '
+      translate: 'Перевод: '
+      title_film: 'Смотреть аниме фильм %{serial_title} бесплатно и онлайн'
+      title_serial: 'Смотреть серию %{chapter_id} аниме сериала %{serial_title} бесплатно и онлайн'
+      description_film: 'Смотреть аниме фильм %{serial_title} онлайн на русском языке, с субтитрами или в озвучке. Это аниме в жанре: %{genre} у нас доступно совершенно бесплатно!'
+      description_serial: 'Смотреть %{chapter_id} серию - %{chapter_title} аниме сериала %{serial_title} онлайн на русском языке, с субтитрами или в озвучке. Это аниме в жанре: %{genre} у нас доступно совершенно бесплатно!'
+      main: 'Главная'
+      current: 'Серия %{chapter_id}%{chapter_title}'
+  chapter:
+    show:
+      h1: 'Аниме %{serial} %{serial_title} - Серия %{chapter_id}'
+      h2: 'Эпизод %{chapter_id} онлайн: %{chapter_title}'
+      small_title: 'Смотреть %{chapter_id} Серию - %{serial_title}'
+      video_date: 'Добавлена: '
+      translate: 'Перевод: '
+      title_film: 'Смотреть аниме фильм %{serial_title} бесплатно и онлайн'
+      title_serial: 'Смотреть серию %{chapter_id} аниме сериала %{serial_title} бесплатно и онлайн'
+      description_film: 'Смотреть аниме фильм %{serial_title} онлайн на русском языке, с субтитрами или в озвучке. Это аниме в жанре: %{genre} у нас доступно совершенно бесплатно!'
+      description_serial: 'Смотреть %{chapter_id} серию - %{chapter_title} аниме сериала %{serial_title} онлайн на русском языке, с субтитрами или в озвучке. Это аниме в жанре: %{genre} у нас доступно совершенно бесплатно!'
+      main: 'Главная'
+      current: 'Серия %{chapter_id}%{chapter_title}'
+  genre:
+    show:
+      special_description: 'Описание:'
+      h2: 'Все аниме с Жанром %{title}'
+      special_title: 'Название'
+      genres: 'Жанры:'
+      page_title: 'Все аниме с жанром %{genre_title}'
+      title: 'Список аниме в жанре %{title}'
+      h1: 'Список аниме в жанре %{title}'
+      description: 'У нас вы сможете найти абсолютно любое аниме в жанре %{title}, ознакомьтесь с полным списком на Анимекульте!'
+      title_2: 'Страница %{page} списка аниме в жанре %{title}'
+      h1_2: 'Страница %{page} списка аниме в жанре %{title}'
+      description_2: 'На странице %{page} вы сможете найти аниме в жанре %{title}.'
+    index:
+      title: 'Список аниме жанров'
+      h1: 'Список аниме жанров'
+      description: 'Тут вы сможете найти любой жанр аниме из полного списка жанров сайта Анимкульт.'
+      title_2: 'Страница %{page} списка аниме жанров'
+      h1_2: 'Страница %{page} списка аниме жанров'
+      description_2: 'На странице %{page} вы сможете найти нужные вам аниме жанры.'
+  by_year:
+    index:
+      title: 'Список годов выпуска аниме'
+      h1: 'Список годов выпуска аниме'
+      description: 'Тут вы сможете найти аниме по году выпуска из полного списка сайта Анимкульт.'
+  category:
+    show:
+      description_special: 'Описание:'
+      h2: 'Все аниме с Категорией %{title}'
+      title_special: 'Название'
+      genres: 'Жанры:'
+      page_title: 'Все аниме с категорией %{category_title}'
+      title: 'Список %{title} аниме'
+      h1: 'Список %{title} аниме'
+      description: 'Здесь вы сможете ознакомиться с полным списком %{title} аниме.'
+      title_2: 'Страница %{page} списка %{title} аниме'
+      h1_2: 'Страница %{page} списка %{title} аниме'
+      description_2: 'На странице %{page} вы сможете найти %{title} аниме.'
+    index:
+      title: 'Аниме категории сайта Анимекульт'
+      h1: 'Аниме категории'
+      description: 'Здесь вы сможете выбрать категорию аниме, будь то OVA, ONA, онгоинг или аниме которому только предстоит выйти.'
+  tag:
+      show:
+        title: '%{title}'
+        description: 'Узнайте всех аниме героев и персонажей с %{title}!'
+        title_2: 'Страница %{page} списка черты персонажей: %{title}'
+        description_2: 'На странице %{page} вы сможете найти упоминания элемента %{title}.'
+  director:
+    show:
+      description_special: 'Описание:'
+      h2: 'Все аниме с Режиссером %{title}'
+      title_special: 'Название'
+      genres: 'Жанры:'
+      page_title: 'Все аниме с режиссером %{director_title}'
+      title: 'Список аниме от режиссера %{title}'
+      h1: 'Список аниме от режиссера %{title}'
+      description: 'Здесь вы сможете ознакомиться с полным списком аниме от режиссера %{title}.'
+      title_2: 'Страница %{page} списка аниме от режиссера %{title}'
+      h1_2: 'Страница %{page} списка аниме от режиссера %{title}'
+      description_2: 'На странице %{page} вы сможете найти аниме от режиссера %{title}.'
+    index:
+      title: 'Список аниме режиссеров'
+      h1: 'Список аниме режиссеров'
+      description: 'Тут вы сможете найти любого режиссера аниме из полного списка режиссеров сайта Анимкульт.'
+      title_2: 'Страница %{page} списка аниме режиссеров'
+      h1_2: 'Страница %{page} списка аниме режиссеров'
+      description_2: 'На странице %{page} вы сможете найти список аниме режиссеров.'
+  author:
+    show:
+      description_special: 'Описание:'
+      h2: 'Все аниме с Автором %{title}'
+      title_special: 'Название'
+      genres: 'Жанры:'
+      page_title: 'Все аниме с автором %{author_title}'
+      title: 'Список аниме от автора %{title}'
+      h1: 'Список аниме от автора %{title}'
+      description: 'Здесь вы сможете ознакомиться с полным списком аниме от автора %{title}.'
+      title_2: 'Страница %{page} списка аниме от автора %{title}'
+      h1_2: 'Страница %{page} списка аниме от автора %{title}'
+      description_2: 'На странице %{page} вы сможете найти аниме от автора %{title}.'
+    index:
+      title: 'Список аниме авторов'
+      h1: 'Список аниме авторов'
+      description: 'Тут вы сможете найти любого оригинального автора аниме из полного списка авторов сайта Анимкульт.'
+      title_2: 'Страница %{page} списка аниме авторов'
+      h1_2: 'Страница %{page} списка аниме авторов'
+      description_2: 'На странице %{page} вы сможете найти список аниме авторов.'
+  studio:
+    show:
+      description_special: 'Описание:'
+      h2: 'Все аниме от Студии %{title}'
+      title_special: 'Название'
+      genres: 'Жанры:'
+      page_title: 'Все аниме от студии %{studio_title}'
+      title: 'Список аниме от студии %{title}'
+      h1: 'Список аниме от студии %{title}'
+      description: 'Здесь вы сможете ознакомиться с полным списком аниме от студии %{title}.'
+      title_2: 'Страница %{page} списка аниме от студии %{title}'
+      h1_2: 'Страница %{page} списка аниме от студии %{title}'
+      description_2: 'На странице %{page} вы сможете найти аниме от студии %{title}.'
+    index:
+      title: 'Аниме студии'
+      h1: 'Аниме студии'
+      description: 'Здесь вы сможете найти аниме студии, которые создали лучшие аниме!'
+      title_2: 'Страница %{page} списка аниме студий'
+      h1_2: 'Страница %{page} списка аниме студий'
+      description_2: 'На странице %{page} вы сможете найти аниме студии, которые создали лучшие аниме!'
+  translator:
+    show:
+      description_special: 'Описание:'
+      h2: 'Все аниме с переводом от %{title}'
+      title_special: 'Название'
+      genres: 'Жанры:'
+      page_title: 'Все аниме с переводом от %{studio_title}'
+      title: 'Список аниме переведенных %{title}'
+      h1: 'Список аниме переведенных %{title}'
+      description: 'Здесь вы сможете ознакомиться с полным списком аниме переведенных %{title}.'
+      title_2: 'Страница %{page} списка аниме переведенных %{title}'
+      h1_2: 'Страница %{page} списка аниме переведенных %{title}'
+      description_2: 'На странице %{page} вы сможете найти аниме переведенные %{title}.'
+    index:
+      title: 'Переводчики аниме'
+      h1: 'Переводчики аниме'
+      description: 'Здесь вы сможете найти лучших аниме переводчиков, которые переводили ваше любимое аниме!'
+      title_2: 'Страница %{page} списка аниме переводчиков'
+      h1_2: 'Страница %{page} списка аниме переводчиков'
+      description_2: 'На странице %{page} вы сможете найти лучших аниме переводчиков, которые переводили ваши любимые аниме!'
+  will_paginate:
+    next_label: 'Вперед &#8594;'
+    previous_label: '&#8592; Назад'
+    page_gap: '...'
+  anime_list:
+    index:
+      empty: "По запросу '%{search_key}' ничего нет."
+      t_serial_name: 'Название'
+      t_serial_release: 'Год выпуска'
+      t_ongoing: 'Онгоинг'
+      t_amv: 'AMV'
+      t_ova: 'OVA'
+      t_full_length: 'Полнометражное'
+      t_type1: '27+ серий'
+      t_type4: '12-13 серий'
+      t_type3: '24-26 серий'
+      t_type6: '2-11 серий'
+      t_genres: 'Жанры:'
+      title: "Список аниме по их русскому названию"
+      h1: "Список аниме по их русскому названию"
+      description: "Здесь вы сможете выбрать аниме из списка по их русскому названию."
+      title_2: "Страница %{page} списка аниме по их русскому названию"
+      h1_2: "Страница %{page} списка аниме по их русскому названию"
+      description_2: "На странице %{page} вы сможете выбрать аниме из списка по их русскому названию."
+      title_search: "Список аниме по букве %{search_key} их русского названия"
+      title_search_by_year: "Список аниме с годом выпуска %{search_key}"
+      h1_search: "Список аниме по букве %{search_key} их русского названия"
+      h1_search_by_year: "Список аниме с годом выпуска %{search_key}"
+      description_search: "Здесь вы сможете выбрать аниме из списка по букве %{search_key} их русского названия."
+      description_search_by_year: "Здесь вы сможете выбрать аниме из списка с годом выпуска %{search_key}."
+      title_search_2: "Страница %{page} списка аниме по букве %{search_key} их русского названия"
+      h1_search_2: "Страница %{page} списка аниме по букве %{search_key} их русского названия"
+      description_search_2: "На странице %{page} списка аниме вы сможете выбрать аниме по букве %{search_key} их русского названия."
+      title_search_by_year_2: "Страница %{page} списка аниме с годом выпуска %{search_key}"
+      h1_search_by_year_2: "Страница %{page} списка аниме с годом выпуска %{search_key}"
+      description_search_by_year_2: "На странице %{page} списка аниме вы сможете выбрать аниме с годом выпуска %{search_key}."
+  errors:
+    format: '%{message}'
+
+  date:
+    abbr_day_names:
+    - Вс
+    - Пн
+    - Вт
+    - Ср
+    - Чт
+    - Пт
+    - Сб
+    abbr_month_names:
+    -
+    - янв.
+    - февр.
+    - марта
+    - апр.
+    - мая
+    - июня
+    - июля
+    - авг.
+    - сент.
+    - окт.
+    - нояб.
+    - дек.
+    day_names:
+    - воскресенье
+    - понедельник
+    - вторник
+    - среда
+    - четверг
+    - пятница
+    - суббота
+    formats:
+      default: "%d.%m.%Y"
+      long: "%-d %B %Y"
+      short: "%-d %b"
+    month_names:
+    -
+    - января
+    - февраля
+    - марта
+    - апреля
+    - мая
+    - июня
+    - июля
+    - августа
+    - сентября
+    - октября
+    - ноября
+    - декабря
+    order:
+    - :day
+    - :month
+    - :year
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: около %{count} часа
+        few: около %{count} часов
+        many: около %{count} часов
+        other: около %{count} часа
+      about_x_months:
+        one: около %{count} месяца
+        few: около %{count} месяцев
+        many: около %{count} месяцев
+        other: около %{count} месяца
+      about_x_years:
+        one: около %{count} года
+        few: около %{count} лет
+        many: около %{count} лет
+        other: около %{count} лет
+      almost_x_years:
+        one: почти 1 год
+        few: почти %{count} года
+        many: почти %{count} лет
+        other: почти %{count} лет
+      half_a_minute: полминуты
+      less_than_x_seconds:
+        one: меньше %{count} секунды
+        few: меньше %{count} секунд
+        many: меньше %{count} секунд
+        other: меньше %{count} секунды
+      less_than_x_minutes:
+        one: меньше %{count} минуты
+        few: меньше %{count} минут
+        many: меньше %{count} минут
+        other: меньше %{count} минуты
+      over_x_years:
+        one: больше %{count} года
+        few: больше %{count} лет
+        many: больше %{count} лет
+        other: больше %{count} лет
+      x_seconds:
+        one: "%{count} секунду"
+        few: "%{count} секунды"
+        many: "%{count} секунд"
+        other: "%{count} секунды"
+      x_minutes:
+        one: "%{count} минуту"
+        few: "%{count} минуты"
+        many: "%{count} минут"
+        other: "%{count} минуты"
+      x_days:
+        one: "%{count} день"
+        few: "%{count} дня"
+        many: "%{count} дней"
+        other: "%{count} дня"
+      x_months:
+        one: "%{count} месяц"
+        few: "%{count} месяца"
+        many: "%{count} месяцев"
+        other: "%{count} месяца"
+      x_years:
+        one: "%{count} год"
+        few: "%{count} года"
+        many: "%{count} лет"
+        other: "%{count} года"
+    prompts:
+      second: Секунд
+      minute: Минут
+      hour: Часов
+      day: День
+      month: Месяц
+      year: Год
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      accepted: нужно подтвердить
+      blank: не может быть пустым
+      confirmation: не совпадает со значением поля %{attribute}
+      empty: не может быть пустым
+      equal_to: может иметь лишь значение, равное %{count}
+      even: может иметь лишь четное значение
+      exclusion: имеет зарезервированное значение
+      greater_than: может иметь значение большее %{count}
+      greater_than_or_equal_to: может иметь значение большее или равное %{count}
+      inclusion: имеет непредусмотренное значение
+      invalid: имеет неверное значение
+      less_than: может иметь значение меньшее чем %{count}
+      less_than_or_equal_to: может иметь значение меньшее или равное %{count}
+      model_invalid: 'Возникли ошибки: %{errors}'
+      not_a_number: не является числом
+      not_an_integer: не является целым числом
+      odd: может иметь лишь нечетное значение
+      other_than: должно отличаться от %{count}
+      present: нужно оставить пустым
+      required: не может отсутствовать
+      taken: уже существует
+      too_long:
+        one: слишком большой длины (не может быть больше чем %{count} символ)
+        few: слишком большой длины (не может быть больше чем %{count} символа)
+        many: слишком большой длины (не может быть больше чем %{count} символов)
+        other: слишком большой длины (не может быть больше чем %{count} символа)
+      too_short:
+        one: недостаточной длины (не может быть меньше %{count} символа)
+        few: недостаточной длины (не может быть меньше %{count} символов)
+        many: недостаточной длины (не может быть меньше %{count} символов)
+        other: недостаточной длины (не может быть меньше %{count} символа)
+      wrong_length:
+        one: неверной длины (может быть длиной ровно %{count} символ)
+        few: неверной длины (может быть длиной ровно %{count} символа)
+        many: неверной длины (может быть длиной ровно %{count} символов)
+        other: неверной длины (может быть длиной ровно %{count} символа)
+    template:
+      body: 'Проблемы возникли со следующими полями:'
+      header:
+        one: "%{model}: сохранение не удалось из-за %{count} ошибки"
+        few: "%{model}: сохранение не удалось из-за %{count} ошибок"
+        many: "%{model}: сохранение не удалось из-за %{count} ошибок"
+        other: "%{model}: сохранение не удалось из-за %{count} ошибки"
+  helpers:
+    select:
+      prompt: 'Выберите: '
+    submit:
+      create: Создать %{model}
+      submit: Сохранить %{model}
+      update: Сохранить %{model}
+  number:
+    currency:
+      format:
+        delimiter: " "
+        format: "%n %u"
+        precision: 2
+        separator: ","
+        significant: false
+        strip_insignificant_zeros: false
+        unit: руб.
+    format:
+      delimiter: " "
+      precision: 3
+      separator: ","
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: "%n %u"
+        units:
+          billion:
+            one: миллиард
+            few: миллиардов
+            many: миллиардов
+            other: миллиардов
+          million:
+            one: миллион
+            few: миллионов
+            many: миллионов
+            other: миллионов
+          quadrillion:
+            one: квадриллион
+            few: квадриллионов
+            many: квадриллионов
+            other: квадриллионов
+          thousand:
+            one: тысяча
+            few: тысяч
+            many: тысяч
+            other: тысяч
+          trillion:
+            one: триллион
+            few: триллионов
+            many: триллионов
+            other: триллионов
+          unit: ''
+      format:
+        delimiter: ''
+        precision: 1
+        significant: false
+        strip_insignificant_zeros: false
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one: байт
+            few: байта
+            many: байт
+            other: байта
+          eb: ЭБ
+          gb: ГБ
+          kb: КБ
+          mb: МБ
+          pb: ПБ
+          tb: ТБ
+    percentage:
+      format:
+        delimiter: ''
+        format: "%n%"
+    precision:
+      format:
+        delimiter: ''
+  support:
+    array:
+      last_word_connector: " и "
+      two_words_connector: " и "
+      words_connector: ", "
+  time:
+    am: утра
+    formats:
+      default: "%a, %d %b %Y, %H:%M:%S %z"
+      long: "%d %B %Y, %H:%M"
+      short: "%d %b, %H:%M"
+    pm: вечера
+
+  will_paginate:
+    next_label: "Следующая →"
+    page_entries_info:
+      multi_page:
+        few: "Отображено %{model} %{from} - %{to} из %{count}"
+        many: "Отображено %{model} %{from} - %{to} из %{count}"
+        one: "Отображено %{model} %{from} - %{to} из %{count}"
+        other: "Отображено %{model} %{from} - %{to} из %{count}"
+      multi_page_html:
+        few: "Отображено %{model} <b>%{from}&nbsp;-&nbsp;%{to}</b> из <b>%{count}</b>"
+        many: "Отображено %{model} <b>%{from}&nbsp;-&nbsp;%{to}</b> из <b>%{count}</b>"
+        one: "Отображено %{model} <b>%{from}&nbsp;-&nbsp;%{to}</b> из <b>%{count}</b>"
+        other: "Отображено %{model} <b>%{from}&nbsp;-&nbsp;%{to}</b> из <b>%{count}</b>"
+      single_page:
+        few: "Отображено %{count} %{model}"
+        many: "Отображено %{count} %{model}"
+        one: "Отображена %{count} %{model}"
+        other: "Отображено %{count} %{model}"
+        zero: "%{model} не найдены"
+      single_page_html:
+        few: "Отображено <b>%{count}</b> %{model}"
+        many: "Отображено <b>%{count}</b> %{model}"
+        one: "Отображена <b>%{count}</b> %{model}"
+        other: "Отображено <b>%{count}</b> %{model}"
+        zero: "%{model} не найдены"
+    page_gap: "&hellip;"
+    previous_label: "← Предыдущая"
+  activerecord:
+    attributes:
+      commontator/comment:
+        body: Комментарий
+        creator: Создал
+        editor: Редактировал
+        thread: Обсуждение
+        parent: Родительский Комментарий
+      commontator/subscription:
+        subscriber: Подписчик
+        thread: Обсуждение
+      commontator/thread:
+        commontable: Комментируем
+    errors:
+      models:
+        commontator/comment:
+          attributes:
+            body:
+              double_posted: этот комментарий уже есть.
+    models:
+      commontator/comment:
+        one: комментарий
+        many: комментарии
+        other: комментарии
+      commontator/subscription:
+        one: подписка
+        many: подписки
+        other: подписки
+      commontator/thread:
+        one: обсуждение
+        many: обсуждения
+        other: обсуждения
+  commontator:
+    anonymous: Аноним
+    comment:
+      actions:
+        cancel: Отменить
+        confirm_delete: Вы уверены, что хотите удалить комментарий?
+        create: Отправить
+        delete: Удалить
+        edit: Редактировать
+        new: Новый Комментарий
+        undelete: Восстановить
+        update: Изменить Комментарий
+        reply: Ответить
+      errors:
+        already_deleted: Этот комментарий был удален.
+        create: Комментарий нельзя оставить потому что
+        not_deleted: Этот комментарий не удален.
+        update: Этот комментарий нельзя изменить потому что
+      status:
+        created_at: '%{created_at}.'
+        deleted_by: Комментарий был удален %{deleter_name}.
+        updated_at: Редактировал %{editor_name}, %{updated_at}.
+        replying: Отвечая %{creator_name}
+        reply_pages: "Страницы ответов:"
+    email:
+      comment_created:
+        body: "%{creator_name} комментировал %{commontable_name}:"
+        subject: "%{creator_name} оставил комментарий к %{commontable_name}"
+      thread_link_html: <a href="%{comment_url}">Нажмите здесь</a> чтобы посмотреть все комментарии к %{commontable_name}.
+    require_login: Вы должны залогиниться прежде чем оставить комментарий.
+    subscription:
+      actions:
+        subscribe: Подписаться
+        unsubscribe: Отписаться
+      errors:
+        already_subscribed: Вы уже подписаны на это обсуждение.
+        not_subscribed: Вы не подписаны на это обсуждение.
+    thread:
+      actions:
+        show_all: Показать все комментарии
+        filter: Фильтровать комментарии
+        close: Закрыть обсуждение
+        confirm_close: Вы уверены, что хотите закрыть обсуждение?
+        reopen: Открыть заново обсуждение
+        show: Показать комментарии
+        hide: Скрыть
+      errors:
+        already_closed: Это обсуждение было закрыто.
+        not_closed: Это обсуждение не закрыто.
+      status:
+        cannot_post: Новый комментарии нельзя разместить в данный момент.
+        closed: Комментарии (Закрыты %{closer_name})
+        open: Комментарии
+        pages: "Страницы комментариев:"
+  time:
+    formats:
+      commontator: "%d %b %Y в %H:%M %Z"

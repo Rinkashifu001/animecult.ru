@@ -1,0 +1,324 @@
+-content_for :title do
+  =get_seo_title
+-content_for :description do
+  =@serial.seo_description
+
+
+
+%main.page
+  .container-fluid
+    =render partial: 'fragments/adv/legal/adv_block'
+
+    /=render partial: 'episode/promo_contest'
+
+    .panel.bg-light
+
+      =render partial: 'fragments/haml/seo_block'
+
+      .admin-nav
+        .btn-group
+          %a.btn.btn-sm.btn-warning{href: edit_serial_path(@serial)}='Редактировать'
+        -if user_signed_in?
+          -if current_user.is_admin?
+            =link_to(@serial.hide_to_unregistered? ? 'Показывать ссылки' : 'Скрыть ссылки',toggle_hide_to_unregistered_serial_path(@serial),class:@serial.hide_to_unregistered? ? 'btn btn-sm btn-danger' : 'btn btn-sm btn-success',method: :post)
+          =render partial: 'fragments/haml/favorite', locals: {data: Favorite.load_for_favoritor(current_user,@serial),object:@serial}
+
+      %div{itemscope:true,itemtype:'http://schema.org/Movie'}
+        %meta{itemprop:'name',content:@serial.title}
+        %meta{itemprop:'description',content:@serial.description}
+
+      %div{itemscope:true, itemprop:'aggregateRating', itemtype:'http://schema.org/AggregateRating'}
+        %meta{itemprop:'ratingValue', content: @serial.rating ? @serial.rating.average : '0'}
+        %meta{itemprop:'bestRating', content: '10'}
+        %meta{itemprop:'ratingCount', content: @serial.rating ? @serial.rating.total : '0'}
+
+      .serial-info
+        .row
+          .serial-info-left.col-12.col-md-5.col-lg-4
+            -if @attachments.any?
+              #serial-info-slider.carousel.slide{'data-ride':'carousel'}
+                %ol.carousel-indicators
+                  -@attachments.each_with_index do |se,index|
+                    %li{class: index.zero? ? 'active' : '', 'data-target': '#serial-info-slider', 'data-slide-to': index}
+                .carousel-inner
+                  -@attachments.each_with_index do |se,index|
+                    .carousel-item{class: index.zero? ? 'active' : ''}
+                      %img.d-block.w-100{src: se.cover_url, itemprop: 'image', title: t('image_special_title',serial_title:@serial.title,screen_no:index+1), alt: t('image_special_alt',serial_title:@serial.title,screen_no:index+1)}
+                %a.carousel-control-prev{href: "#serial-info-slider", role: "button", "data-slide": "prev"}
+                  %span.carousel-control-prev-icon{"aria-hidden": "true"}
+                  %span.sr-only="Previous"
+                %a.carousel-control-next{href: "#serial-info-slider", role: "button", "data-slide": "next"}
+                  %span.carousel-control-next-icon{"aria-hidden": "true"}
+                  %span.sr-only="Next"
+
+          .serial-info-right.col-12.col-md-7.col-lg-8
+
+            -if !@serial.full_length && !@chapters.blank?
+              %a.serial-info-watch.btn.btn-primary{href: serial_episode_path(serial_id:@serial.clear_link,id:@chapters[-1].chapter_id)}=t('.watch_from_start')
+
+
+            .serial-info-rows
+              =render partial: 'fragments/html/moderation_status_rows', locals: {obj:@serial}
+              -unless @serial.aka.blank?
+                .serial-info-row
+                  .serial-info-name=t('aka')+':'
+                  .serial-info-value=@serial.show_aka.html_safe
+
+              .serial-info-row
+                .serial-info-name=t('genres')+':'
+                .serial-info-value
+                  -@serial.elements_by_elem_type[Element::GENRE_ID].each do |genre|
+                    %a.badge{href: genre_path(genre.element_link)}=genre.title
+
+              .serial-info-row
+                .serial-info-name=@serial.full_length ? t('.full_length_title') : t('.serial_count')
+                .serial-info-value=@serial.full_length ? t('.full_length_value') : @serial.total
+              -unless @serial.elements_by_elem_type[Element::CATEGORY_ID].blank?
+                .serial-info-row
+                  .serial-info-name=t('categories')+':'
+                  .serial-info-value
+                    -@serial.elements_by_elem_type[Element::CATEGORY_ID].each do |category|
+                      %a.badge.badge-success{href: category_path(category.element_link)}=category.title
+
+              -unless @serial.release.blank?
+                .serial-info-row
+                  .serial-info-name=t('.release')
+                  .serial-info-value
+                    %a.link{href: "/?release_v1=#{@serial.release}&release_v2=#{@serial.release}"}=@serial.release
+
+              .serial-info-row
+                .serial-info-name='Рейтинг:'
+                .serial-info-value
+                  #rating{'data-score':@serial.rating ? @serial.rating.average : '0','data-serial-id':@serial.id,
+                    'data-user-rated': @serial.rating ? (user_signed_in? ? (current_user.rated?(@serial) ? 'true' : 'false') : '') : ''}
+
+              -unless @serial.elements_by_elem_type[Element::STUDIO_ID].blank?
+                .serial-info-row
+                  .serial-info-name=t('studios')+':'
+                  .serial-info-value
+                    -@serial.elements_by_elem_type[Element::STUDIO_ID].each do |studio|
+                      %a.badge{href: studio_path(studio.element_link)}=studio.title
+
+              -unless @serial.elements_by_elem_type[Element::DIRECTOR_ID].blank?
+                .serial-info-row
+                  .serial-info-name=t('directors')+':'
+                  .serial-info-value
+                    -@serial.elements_by_elem_type[Element::DIRECTOR_ID].each do |director|
+                      %a.badge{href: director_path(director.element_link)}=director.title
+
+              -unless @serial.elements_by_elem_type[Element::AUTHOR_ID].blank?
+                .serial-info-row
+                  .serial-info-name=t('authors')+':'
+                  .serial-info-value
+                    -@serial.elements_by_elem_type[Element::AUTHOR_ID].each do |author|
+                      %a.badge{href: author_path(author.element_link)}=author.title
+
+              -creators_by_group(@serial).each_pair do |title,data|
+                -if Creator::MANUAL_TRANSLATED.include?(title)
+                  .serial-info-row
+                    .serial-info-name=Creator::MANUAL_TRANSLATED[title]
+                    .serial-info-value
+                      -data.sort_by{|x| x[:title]}.each_with_index do |obj,index|
+                        -if index<Creator::CREATORS_LIMIT
+                          -if index+1==Creator::CREATORS_LIMIT || (data.size<Creator::CREATORS_LIMIT && data.size==index+1)
+                            =link_to(obj[:title],obj[:link])
+                          -else
+                            ="#{link_to(obj[:title],obj[:link])},".html_safe
+
+              -unless @serial.openings.blank?
+                .serial-info-row
+                  .serial-info-name Опенинги:
+                  .serial-info-value=show_sp_collection(@serial.openings,Serial::OPENING_LIMIT)
+
+              -unless @serial.endings.blank?
+                .serial-info-row
+                  .serial-info-name Эндинги:
+                  .serial-info-value=show_sp_collection(@serial.endings,Serial::ENDING_LIMIT)
+
+              -unless @serial.endings.blank?
+                .serial-info-row
+                  .serial-info-name Песни и Музыка:
+                  .serial-info-value=show_sp_collection(@serial.ost,Serial::OST_LIMIT)
+
+              .associated.accordion
+                -unless @serial.creator_participates.blank?
+                  %a.btn.btn-secondary.btn-sm{href:creators_serial_path(@serial.clear_link)} Создатели
+                -unless @serial.song_participates.blank?
+                  %a.btn.btn-secondary.btn-sm{href:songs_serial_path(@serial.clear_link)} Вся музыка
+                -unless @serial.character_participates.blank?
+                  %a.btn.btn-secondary.btn-sm{href:characters_serial_path(@serial.clear_link)} Герои
+
+            -if @associated_serials.any?
+
+              .associated.accordion#associated
+                .associated-btn.btn.btn-secondary{"data-target": "#panel", "data-toggle": "collapse", "aria-expanded": "true", "aria-controls": "collapseOne"}=t('.associated')
+                .associated-content.collapse{id: "panel", "data-parent": "#associated"}
+                  .associated-content-inner
+                    -@associated_serials.each_with_index do |associated_serial,i|
+                      %a.link{href: serial_path(associated_serial.clear_link)}=associated_serial.title
+                      -unless i==(@associated_serials.size-1)
+                        %br
+
+
+
+        %h2.associated.accordion=t('.description')
+
+        .serial-description
+          -if @serial.translate
+            =@serial.translate.description.to_s.html_safe
+            %br
+            %a.link{href: translate_serial_path(@serial)}=t('.to_translate')
+          -else
+            =@serial.description.to_s.html_safe
+
+        -unless @serial.character_participates.blank?
+          %ul.nav.nav-tabs#charactersTab{role:'tablist'}
+            %li.nav-item
+              %a.nav-link#mainCharacterTab{'data-toggle': 'tab', href: '#mainCharacter',role:'tab','aria-controls':'#mainCharacter','aria-selected':true} Главные
+            -unless @serial.character_participates.select{|cp| cp.category==CharacterParticipate::SECONDARY_CHARACTER_ID}.blank?
+              %li.nav-item
+                %a.nav-link#secondaryCharacterTab{'data-toggle': 'tab', href: '#secondaryCharacter',role:'tab','aria-controls':'#secondaryCharacter','aria-selected':false} Вторичные
+          .tab-content#charactersTabList
+            .tab-pane.fade.active.show#mainCharacter{role:'tabpanel','aria-labelledby':'mainCharacterTab'}
+              .mainCharacterSlider
+                -@serial.character_participates.each_with_index do |cp,index|
+                  -if !cp.character.attachments.blank? && cp.category==CharacterParticipate::MAIN_CHARACTER_ID && !cp.character.link.blank?
+                    .div
+                      %a{href:character_path(cp.character.link),target:'_blank'}
+                        .character-title=smallize(cp.character.title,20)
+                        %img.tiny-image.tns-lazy-img{'data-src':cp.character.attachments[0].cover_url}
+                      -if !cp.creator.blank? && !cp.creator.link.blank? && !cp.creator.attachments.blank?
+                        %a{href:creator_path(cp.creator.link),target:'_blank'}
+                          .character-title=smallize(cp.creator.title,20)
+                          %img.tiny-image.tns-lazy-img{'data-src':cp.creator.attachments[0].cover_url}
+            -unless @serial.character_participates.select{|cp| cp.category==CharacterParticipate::SECONDARY_CHARACTER_ID}.blank?
+              .tab-pane.fade#secondaryCharacter{role:'tabpanel','aria-labelledby':'secondaryCharacterTab'}
+                .secondaryCharacterSlider
+                  -@serial.character_participates.each_with_index do |cp,index|
+                    -if !cp.character.attachments.blank? && cp.category==CharacterParticipate::SECONDARY_CHARACTER_ID && !cp.character.link.blank?
+                      .div
+                        %a{href:character_path(cp.character.link),target:'_blank'}
+                          .character-title=smallize(cp.character.title,20)
+                          %img.tiny-image.tns-lazy-img{'data-src':cp.character.attachments[0].cover_url}
+                        -if !cp.creator.blank? && !cp.creator.link.blank? && !cp.creator.attachments.blank?
+                          %a{href:creator_path(cp.creator.link),target:'_blank'}
+                            .character-title=smallize(cp.creator.title,20)
+                            %img.tiny-image.tns-lazy-img{'data-src':cp.creator.attachments[0].cover_url}
+
+        -if user_signed_in? && current_user.is_admin?
+          .panel.bg-light
+            -if @serial.anidb_description.blank?
+              %h3 Нет данных с anidb
+            -else
+              %h3 Данные с anidb
+              %button#special_show_data.btn.btn-info Показать
+              .special-data
+                %p=@serial.anidb_description
+                .serial-info-rows
+                  .serial-info-row
+                    .serial-info-name Другие названия
+                    .serial-info-value=@serial.anidb_aka
+                  -unless @serial.character_participates.blank?
+                    .serial-info-row
+                      .serial-info-name Персонажи
+                      .serial-info-value=characters(@serial)
+                  -unless @serial.creator_participates.blank?
+                    .serial-info-row
+                      .serial-info-name Персонал
+                      .serial-info-value=creators(@serial)
+                  -unless @serial.song_participates.blank?
+                    .serial-info-row
+                      .serial-info-name Песни
+                      .serial-info-value=songs(@serial)
+                  -unless @serial.resources.blank?
+                    .serial-info-row
+                      .serial-info-name Страницы
+                      .serial-info-value
+                        -@serial.resources.each_with_index do |resource,index|
+                          -unless index.zero?
+                            =','
+                          =link_to(resource.title,resource.value,target:'_blank')
+
+          %br
+
+
+        .admin-nav
+          %a.btn.btn-sm.btn-success{href: new_review_path(serial_id:@serial.id)}='Создать рецензию'
+
+        .panel.bg-light=commontator_thread(@serial)
+
+        -if @serial.reviews.any?
+          .reviews
+            %h3="Рецензии на аниме #{@serial.title}:"
+            .reviews-items
+              -@serial.reviews.each do |review|
+                .reviews-item
+                  .reviews-item-desc=review.descr_short
+                  %a.reviews-item-link.link{href: review_path(review)}='Читать полностью'
+
+
+        -#=render 'fragments/socials/comments/vk_body'
+
+
+        -if @videos.any?
+
+          .serials.accordion#serials
+
+            -@videos.each do |video|
+
+              .serial
+
+                .serial-btn{"data-target": "#panel#{video.id}", "data-toggle": "collapse", "aria-expanded": "true", "aria-controls": "collapseOne", "data-id": video.id, class: (video.id==@video_id) ? 'serial-loaded' : ''}
+                  .row.align-items-center
+                    .serial-source.col-12.col-sm-2.col-lg-1
+                      %img.serial-source-img{src: Rails.env=='development' ? 'https://animecult.org/assets/english-d499982ee68b89234947dfa1e5ed35307429af4d92d66e348f13c04d8fc649a0.png' : video.source_image}
+                    .serial-translator.col-12.col-sm-5.col-md-6.col-lg-7
+                      -video_details(video.details).each do |detail|
+                        %img.serial-translator-img{src: Rails.env=='development' ? 'https://animecult.org/assets/many_dub-79e7c191a17dead272633c9273d56bfef77a25b2e1d8bc089bbc37583f72a1dd.jpg' : "#{detail}.jpg"}
+                      -if video.translator
+                        %span.serial-translator-title=video.translator.title
+                    .serial-date.col-12.col-sm-5.col-md-4
+                      =t('.video_date')
+                      %b=video.video_date.strftime('%d.%m.%Y')
+
+                .serial-content.collapse{id: "panel#{video.id}", class: (video.id==@video_id) ? 'show' : '', "data-parent": "#serials"}
+
+                  -if @prev_link.blank?
+                    %span.serial-nav-btn.serial-nav-prev.arrow-btn.arrow-btn-prev.arrow-btn-disabled='<'
+                  -else
+                    %a.serial-nav-btn.serial-nav-prev.arrow-btn.arrow-btn-prev{href:@prev_link}='<'
+
+                  .serial-video{id: "video#{video.id}"}
+                    -if video.id==@video_id
+                      =video.video_url.html_safe
+
+                  -if @next_link.blank?
+                    %span.serial-nav-btn.serial-nav-next.arrow-btn.arrow-btn-next.arrow-btn-disabled='>'
+                  -else
+                    %a.serial-nav-btn.serial-nav-next.arrow-btn.arrow-btn-next{href:@next_link}='>'
+
+
+
+        %br
+        %h3=t('.h3_where',title:@serial.title)
+
+        .admin-nav
+          %a.btn.btn-sm.btn-success{href: new_serial_episode_path(serial_id:@serial.transliterated_link)} Добавить эпизод
+
+        -if @chapters.any?
+          .chapters
+            .chapters-items
+
+              .chapters-item.chapters-items-header
+                .chapters-number
+                .chapters-title=t('.serial_title')
+
+              -@chapters.each_with_index do |chapter,index|
+
+                %a.chapters-item{href: serial_episode_path(serial_id:@serial.transliterated_link,id:chapter.chapter_id),class: index>Chapter::MAX_CHAPTERS_WITHOUT_COLLAPSE ? 'hidden' : ''}
+                  .chapters-number=t('search.index.chapter_title',id:chapter.chapter_id)
+                  .chapters-title=preview_chapter_title(chapter.title)
+              -if @serial.chapters.size > Chapter::MAX_CHAPTERS_WITHOUT_COLLAPSE
+                %a.chapters-item.chapters-expand{href: '#'}
+                  .chapters-number
+                  .chapters-title.centered РАЗВЕРНУТЬ

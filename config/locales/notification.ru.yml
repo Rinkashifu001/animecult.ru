@@ -1,0 +1,9 @@
+ru:
+  notification:
+    titles:
+      change_approved: 'Ваши изменения приняты'
+      change_cancelled: 'Ваши изменения отклонены'
+      object_applied: 'Ваш объект подтверждён'
+      object_cancelled: 'Ваш объект отклонён'
+      comment_created: 'Ваш объект прокомментирован'
+      comment_answered: 'На ваш комментарий ответили'

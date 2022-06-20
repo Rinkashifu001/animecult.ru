@@ -1,0 +1,30 @@
+-content_for :title do
+  =t(".title#{@page>1 ? '_2' : ''}",page:@page,title:@tag.seo_title)
+-content_for :description do
+  =t(".description#{@page>1 ? '_2' : ''}",page:@page,title:@tag.seo_title)
+=content_for(:next_page) do
+  =special_page_link(@de,:next_page)
+=content_for(:previous_page) do
+  =special_page_link(@de,:previous_page)
+
+%main.page
+  .container-fluid
+    =render partial: 'fragments/adv/legal/adv_block'
+    .panel.bg-light
+      %h1.heading=@tag.seo_title
+      .row
+        -@de.each_with_index do |de,index|
+          -unless de.description.link.blank?
+            -if de.description.class==Character
+              -link = character_path(de.description.link)
+            -elsif de.description.class==Creator
+              -link = creator_path(de.description.link)
+            -elsif de.description.class==Song
+              -link = song_path(de.description.link)
+            .col-4.col-lg-2
+              %a{href:link}
+                =de.description.title
+                %br
+                -unless de.description.attachments.blank?
+                  =image_tag(de.description.attachments[0].cover_url,class:'block-image')
+      =paginate @de

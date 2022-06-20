@@ -1,0 +1,25 @@
+-content_for :title do
+  Модерация
+%main.page
+  .container-fluid
+    .panel.bg-light
+      %h1.heading Список комментариев
+      %table.table#comments
+        %thead
+          %tr
+            %th ID
+            %th Автор
+            %th Текст
+            %th Дата
+            %th Объект
+        %tbody
+          -@comments.each do |comment|
+            %tr
+              %td=comment.id
+              %td=comment.creator.blank? ? '' : comment.creator.show_title
+              %td=comment.body
+              %td=comment.updated_at
+              %td
+                %a{href:get_pass(comment.thread.commontable)}
+                  %strong=comment.thread.commontable.class::NAME
+                  =comment.thread.commontable.title

@@ -1,0 +1,7 @@
+-if object.new_record?
+  =form.fields_for :attachments do |p|
+    .field
+      =p.label :cover,'Добавить картинки', class: 'btn btn-success'
+      =p.file_field :cover, multiple: true, name: 'attachments[cover][]', class: 'images-loader-input'
+-else
+  =render partial: 'fragments/haml/images_loader',locals: {object: object}

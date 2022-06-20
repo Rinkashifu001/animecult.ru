@@ -1,0 +1,10 @@
+-unless chapter_links.blank?
+  -chapter_links.each_with_index do |chapter_link,index|
+    %li{class:index.odd? ? 'clearfix' : ''}
+      .message-data{class:index.odd? ? 'align-right' : ''}
+        %span.message-data-name
+          %b=(chapter_link.account.blank? || chapter_link.account.nickname.blank?) ? 'Анонимно' : chapter_link.account.nickname
+        -if user_signed_in? && current_user.moderation_available?
+          =link_to('Отменить',cancel_chapter_link_serial_episode_path(chapter_link_id:chapter_link.id),method: :post,class: 'btn btn-sm btn-danger', :data => { :confirm => 'Вы уверены?'})
+      .message{class:index.odd? ? 'float-right me-message' : 'you-message'}
+        %a{href:chapter_link.link,target:'_blank'}=chapter_link.title

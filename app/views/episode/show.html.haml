@@ -1,0 +1,114 @@
+-content_for :title do
+  =get_seo_title
+-content_for :description do
+  =@chapter.seo_description
+%main.page
+  .container-fluid
+    =render partial: 'fragments/adv/legal/adv_block'
+
+    .panel.bg-light
+      =render partial: 'fragments/haml/seo_block'
+      -if @chapter.is_cancelled?
+        .badge.badge-alert Блокировано модератором
+        -unless @chapter.is_applied?
+          .badge.badge-alert Не подтверждено модератором
+      .admin-nav
+        .btn-group
+          %a.btn.btn-sm.btn-warning{href: edit_serial_episode_path(@chapter.serial.transliterated_link,@chapter.id)}='РЕДАКТИРОВАТЬ'
+        - if user_signed_in?
+          -if current_user.is_admin?
+            -if (@serial.hide_to_unregistered? || @chapter.hide_to_unregistered?)
+              -text = 'Показывать ссылки'
+              -cls = 'btn btn-sm btn-danger'
+            -else
+              -text = 'Скрыть ссылки'
+              -cls = 'btn btn-sm btn-success'
+            =link_to(text,toggle_hide_to_unregistered_serial_episode_path(@chapter.serial.transliterated_link,@chapter.id),method: :post, class: cls)
+          .btn-group#favorite{'data-object-type':'chapter','data-object-id':@chapter.id}
+            =render partial: 'fragments/html/favorite', locals: {user: current_user, object: @serial,data: Favorite.for_favoritor(current_user).where(favoritable: @serial)}
+
+      .episode-nav
+        -prev_link = @chapters.select{|c| !c.chapter_id.to_i.zero? && c.chapter_id < @chapter.chapter_id}[-1]
+        -if prev_link.blank?
+          %span.episode-nav-btn.episode-nav-prev.arrow-btn.arrow-btn-prev.arrow-btn-disabled='<'
+        -else
+          %a.episode-nav-btn.episode-nav-prev.arrow-btn.arrow-btn-prev{href:serial_episode_path(serial_id:@serial.clear_link,id:prev_link.chapter_id)}='<'
+        %select.episode-nav-select.form-control
+          -@chapters.each do |chapter|
+            %option{value: serial_episode_path(serial_id: @serial.clear_link, id: chapter.chapter_id), selected: (chapter.chapter_id==@chapter.chapter_id)}=t('.current', chapter_id: chapter.chapter_id, chapter_title: preview_chapter_title(chapter.title).blank? ? '' : ": #{chapter.title}")
+        -next_link = @chapters.select{|c| !c.chapter_id.to_i.zero? && c.chapter_id > @chapter.chapter_id}[0]
+        -if next_link.blank?
+          %span.episode-nav-btn.episode-nav-next.arrow-btn.arrow-btn-next.arrow-btn-disabled='>'
+        -else
+          %a.episode-nav-btn.episode-nav-next.arrow-btn.arrow-btn-next{href:serial_episode_path(serial_id:@serial.clear_link,id:next_link.chapter_id)}='>'
+
+      -if !@chapter.title.blank? && @chapter.serial.total > 1
+        %h2.heading.heading-2=t('.h2',chapter_id:@chapter.chapter_id,chapter_title:preview_chapter_title(@chapter.title))
+      %div=@chapter.description.to_s.html_safe
+
+      -if user_signed_in?
+        %h3 Добавить источник видео
+        .row{style:'margin-bottom:20px;'}
+          .col-sm-10.col-md-10.col-lg-10.col-xl-3
+            %select.form-control.mx-sm-3#video-details
+              -Video::DETAILS_DATA.keys.each_with_index do |key,index|
+                %option{value:index,selected:index.zero?}=key
+          .col-sm-10.col-md-10.col-lg-10.col-xl-5
+            %input.form-control.mx-sm-3#video-link{name:'video-link',placeholder:'Ссылка в формате <iframe...'}
+          .col-sm-10.col-md-10.col-lg-10.col-xl-2
+            %button.btn.btn-success.mx-sm-3#create-video-link Добавить
+
+        .videos
+          -unless prev_link.blank?
+            .side-arrow.side-arrow-left
+              %a.episode-nav-btn.episode-nav-prev.arrow-btn2.arrow-btn2-prev{href:serial_episode_path(serial_id:@serial.clear_link,id:prev_link.chapter_id)}='<'
+          =render(partial: 'videos',locals: {videos:@videos})
+          -unless next_link.blank?
+            .side-arrow-right
+              .side-arrow.side-arrow-right
+                %a.episode-nav-btn.episode-nav-next.arrow-btn2.arrow-btn2-next{href:serial_episode_path(serial_id:@serial.clear_link,id:next_link.chapter_id)}='>'
+
+        .episode-nav
+          -if prev_link.blank?
+            %span.episode-nav-btn.episode-nav-prev.arrow-btn.arrow-btn-prev.arrow-btn-disabled='<'
+          -else
+            %a.episode-nav-btn.episode-nav-prev.arrow-btn.arrow-btn-prev{href:serial_episode_path(serial_id:@serial.clear_link,id:prev_link.chapter_id)}='<'
+          %select.episode-nav-select.form-control
+            -@chapters.each do |chapter|
+              %option{value: serial_episode_path(serial_id: @serial.clear_link, id: chapter.chapter_id), selected: (chapter.chapter_id==@chapter.chapter_id)}=t('.current', chapter_id: chapter.chapter_id, chapter_title: preview_chapter_title(chapter.title).blank? ? '' : ": #{chapter.title}")
+          -if next_link.blank?
+            %span.episode-nav-btn.episode-nav-next.arrow-btn.arrow-btn-next.arrow-btn-disabled='>'
+          -else
+            %a.episode-nav-btn.episode-nav-next.arrow-btn.arrow-btn-next{href:serial_episode_path(serial_id:@serial.clear_link,id:next_link.chapter_id)}='>'
+
+      -unless user_signed_in?
+        =render partial: 'promo_register'
+
+      .panel.bg-light=commontator_thread(@chapter)
+
+      -if user_signed_in? || (!@serial.hide_to_unregistered? && !@chapter.hide_to_unregistered?)
+        %h3="Добавить где посмотреть #{@chapter.chapter_id} серию"
+        .row{style:'margin-bottom:20px;'}
+          .col-sm-10.col-md-10.col-lg-10.col-xl-8
+            %input.form-control.mx-sm-3#chapter-link{name:'chapter-link',placeholder:'Ссылка на сайт в формате https://...','data-id':@chapter.id}
+          .col-sm-10.col-md-10.col-lg-10.col-xl-3
+            %button.btn.btn-success.mx-sm-3#create-chapter-link Добавить
+
+        .chat
+          .chat-history
+            %ul.chat-ul
+              -if !@chapter.user_title1.blank? || !@chapter.user_title2.blank?
+                -unless @chapter.user_title1.blank?
+                  %li
+                    .message-data
+                      %span.message-data-name
+                        %b=@chapter.user_title1
+                    .message.you-message
+                      %a{href:@chapter.link_to_findanime,target:'_blank'} FindAnime
+                -unless @chapter.user_title2.blank?
+                  %li.clearfix
+                    .message-data.align-right
+                      %b=@chapter.user_title2
+                    .message.me-message.float-right
+                      %a{href:@chapter.link_to_anime24,target:'_blank'} Аниме24
+              .chapter-links=render(partial: 'links',locals: {chapter_links:@chapter_links})

@@ -1,0 +1,17 @@
+-content_for :title do
+  =@serial.seo_title_creators
+-content_for :description do
+  ="Все создатели аниме #{@serial.title}"
+%main.page
+  .container-fluid
+    .panel.bg-light
+      %h1
+        Все создатели аниме
+        =link_to(@serial.title,serial_path(@serial.transliterated_link))
+      .serial-info-rows
+        -creators_by_group(@serial).each_pair do |title,data|
+          .serial-info-row
+            .serial-info-name-expanded="#{title}:"
+            .serial-info-value
+              -data.sort_by{|x| x[:title]}.each_with_index do |obj,index|
+                ="#{link_to(obj[:title],obj[:link])}#{data.size==index+1 ? '' : ','}".html_safe

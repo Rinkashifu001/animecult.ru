@@ -1,0 +1,3 @@
+.btn-group#favorite{'data-object-type':object.class.to_s.downcase,'data-object-id':object.id}
+  =render partial: 'fragments/haml/favorite_dynamic', locals: {data:data}
+=render partial: 'fragments/haml/favorite_static'

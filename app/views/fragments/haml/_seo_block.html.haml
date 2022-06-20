@@ -1,0 +1,15 @@
+%h1{class: get_seo_klass}
+  =get_seo_h1.html_safe
+  -if user_signed_in? && current_user.is_admin?
+    %button.btn.btn-sm.btn-success#admin-seo-block-toggle Toggle SEO
+-if user_signed_in? && current_user.is_admin?
+  .admin-seo-block
+    -if get_seo_dynamic.include?(controller_name.to_sym) && get_seo_dynamic[controller_name.to_sym].include?(action_name.to_sym)
+      %strong
+        У объекта @seo_obj разрешен вызов ключ: метод. Пример: !test! Доступны:
+      %br
+      =get_seo_dynamic[controller_name.to_sym][action_name.to_sym]
+    -get_seo_block(controller_name,action_name).each_pair do |domain,data|
+      =render partial: 'fragments/haml/seo_elem', locals: {domain: domain, data: data}
+    .text-right
+      %button.btn.btn-primary.admin-seo-block-save{'data-controller-name':controller_name,'data-action-name':action_name} Сохранить

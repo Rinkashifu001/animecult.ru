@@ -1,0 +1,19 @@
+.text-right=f.submit 'Сохранить', class: 'btn btn-primary'
+
+=render partial: 'fragments/html/errors', locals: {obj: @review}
+.form-group
+  =f.label :title, Review::EDITABLE_FIELDS[:title]
+  =f.text_field :title,size: '50', class: 'form-control'
+.form-group
+  =f.label :descr_short, Review::EDITABLE_FIELDS[:descr_short]
+  =f.text_area :descr_short,size: '50x4', class: 'form-control'
+
+  =f.hidden_field :serial_id
+
+.form-group
+  =render partial: 'fragments/haml/images_block', locals: {object: @review,form:f}
+
+.form-group
+  =f.label :descr_full, Review::EDITABLE_FIELDS[:descr_full]
+  =f.text_area :descr_full,id:'froalaEditor',size: '50x20', class: 'form-control'
+

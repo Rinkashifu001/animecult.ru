@@ -1,0 +1,15 @@
+%main.page
+  .container-fluid
+    .panel.bg-light
+
+      %ol.breadcrumb
+        %li.breadcrumb-item
+          =link_to(@review.serial.title,serial_path(@review.serial.transliterated_link))
+        %li.breadcrumb-item
+          =link_to(@review.title,review_path(@review))
+        %li.breadcrumb-item.active Редактировать
+        -if current_user.moderation_available?
+          %li.breadcrumb-item=link_to('Удалить',review_path(@review),method: :delete, :data => { :confirm => 'Вы уверены?'})
+
+      =form_for @review, url: review_path(@review), html: { method: :put } do |f|
+        =render 'form', f:f

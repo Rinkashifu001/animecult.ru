@@ -1,0 +1,18 @@
+.text-right=f.submit 'Сохранить', class: 'btn btn-primary'
+
+=render partial: 'fragments/html/errors', locals: {obj: @creator}
+.form-group
+  =f.label :link, Creator::EDITABLE_FIELDS[:link]
+  =f.text_field :link, class: 'form-control', placeholder: 'Оставьте пустым для генерации из названия'
+.form-group
+  =f.label :title, Creator::EDITABLE_FIELDS[:title]
+  =f.text_field :title, class: 'form-control'
+.form-group
+  =f.label :title_translated, Creator::EDITABLE_FIELDS[:title_translated]
+  =f.text_field :title_translated, class: 'form-control'
+.form-group
+  =render partial: 'fragments/haml/images_block', locals: {object: @creator,form:f}
+.form-group
+  =f.label :description, Creator::EDITABLE_FIELDS[:description]
+  =f.text_area :description,id:'froalaEditor',size: '50x20', class: 'form-control'
+

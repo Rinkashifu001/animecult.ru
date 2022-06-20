@@ -1,0 +1,28 @@
+%main.page
+  .container-fluid
+    .panel.bg-light
+
+      %h1.heading
+        Редактирование песни
+        =link_to(@song.title,song_path(@song.link))
+
+      =form_for(@song,url: song_path(@song.link)) do |f|
+        =render 'form', f:f
+
+        %br
+        %h3.heading-3 Персонал
+        .row
+          .col-4
+            %input.form-control#song_creator_search{placeholder:'Персона...'}
+          .col-4
+            %input.form-control#song_credit_search{placeholder:'Профессия...'}
+          .col-1
+          .col-3
+            %a.btn.btn-success#add_song_stuff{href:'#'} Добавить
+        #song_stuff_items
+          -@song.song_stuffs.each do |ss|
+            %span.song-stuff-block{'data-id':"#{ss.creator.id}-#{ss.credit.id}"}
+              ="#{ss.creator.title} (#{ss.credit.title})"
+              %a.remove-link{href:'#'}
+                %span.badge.badge-alert X
+        %input.serial-hidden#song_stuffs{name: :song_stuffs,value:@song.song_stuffs.map{|ss| "#{ss.creator.id}-#{ss.credit.id}"}.join(',')}

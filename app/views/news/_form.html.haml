@@ -1,0 +1,20 @@
+.text-right=f.submit 'Сохранить', class: 'btn btn-primary'
+
+=render partial: 'fragments/html/errors', locals: {obj: @new}
+.form-group
+  =f.label :title, New::EDITABLE_FIELDS[:title]
+  =f.text_field :title,size: '50', class: 'form-control'
+.form-group
+  =f.label :link, New::EDITABLE_FIELDS[:link]
+  =f.text_field :link,size: '50', class: 'form-control', placeholder: 'Оставьте пустым для генерации из названия'
+.form-group
+  =f.label :descr_short, New::EDITABLE_FIELDS[:descr_short]
+  =f.text_area :descr_short,size: '50x4', class: 'form-control', placeholder: 'Оставьте пустым для генерации из статьи'
+.form-group
+  =render partial: 'fragments/haml/images_block', locals: {object: @new,form:f}
+  -if @new.attachments.blank?
+    %span Оставьте пустым для подгрузки картинки из статьи
+.form-group
+  =f.label :descr_full, New::EDITABLE_FIELDS[:descr_full]
+  =f.text_area :descr_full,id:'froalaEditor',size: '50x20', class: 'form-control'
+

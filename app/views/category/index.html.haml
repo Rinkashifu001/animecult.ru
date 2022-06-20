@@ -1,0 +1,22 @@
+-content_for :title do
+  =t('.title')
+-content_for :description do
+  =t('.description')
+=content_for(:next_page) do
+  =special_page_link(@categories,:next_page)
+=content_for(:previous_page) do
+  =special_page_link(@categories,:previous_page)
+
+%main.page
+  .container-fluid
+    =render partial: 'fragments/adv/legal/adv_block'
+    .panel.bg-light
+
+      %h1.heading=t('.h1')
+
+      .anime-list
+        -@categories.each do |category|
+          %a.anime-list-item{href: category_path(category.element_link)}=category.title
+
+      =will_paginate @categories
+

@@ -1,0 +1,30 @@
+-content_for :title do
+  =@serial.seo_title_characters
+-content_for :description do
+  ="Все персонажи аниме #{@serial.title}"
+%main.page
+  .container-fluid
+    .panel.bg-light
+      %h1
+        Все персонажи аниме
+        =link_to(@serial.title,serial_path(@serial.transliterated_link))
+        -acps = @serial.character_participates_by_category
+        -acps.keys.sort.each do |category|
+          %h2="#{CharacterParticipate::CATEGORY_TITLES[category][:many]}:"
+          -acps[category].each_slice(6).to_a.each do |dataset|
+            .row
+              -dataset.each do |cp|
+                .col-6.col-md-3
+                  -unless cp.character.link.blank?
+                    %a{href:character_path(cp.character.link)}
+                      =cp.character.title
+                      -unless cp.character.attachments.blank?
+                        %br
+                        =image_tag(cp.character.attachments[0].cover_url,class:'character-icon')
+                .col-6.col-md-3
+                  -unless cp.creator.blank?
+                    %a{href:creator_path(cp.creator.link)}
+                      =cp.creator.title
+                      -unless cp.creator.attachments.blank?
+                        %br
+                        =image_tag(cp.creator.attachments[0].cover_url,class:'character-icon')

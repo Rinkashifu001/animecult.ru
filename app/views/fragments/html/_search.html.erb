@@ -1,0 +1,22 @@
+<%-data.each_with_index do |pair,index|%>
+<div class="large-33 columns clickableCol" style="text-align: center; width: 150px;padding-left: 5px;padding-right: 5px; padding-bottom: 5px; float:left; ">
+    <a href="<%=serial_episode_path(serial_id:pair[1]['clear_link'],id:pair[1]['videos'][0][:chapter_id])%>" >
+    <span class="label <%=video_details2(pair[1]['videos'][0][:details])[1] %>">
+             <%=video_details2(pair[1]['videos'][0][:details])[0]%>
+    </span>
+
+        <span class='label type13'><%=pair[1]['videos'][0][:title]%></span>
+        <br>
+        <div class="th" style="margin: 5 0 0 0;">
+            <div class="pic" style="background: url(<%=image_path(get_image("/images/#{pair[0]}_1_wm.jpg")) %>); background-size: 130px 180px;">
+                <div class="pic_d">
+                    <p class="pic_text" style="width: 100%; height: 100%; color:white; margin-bottom: 0px; font-size: 0.85rem;">
+                        <%=serial_preview(pair[1]['title'],pair[1]['elements'].map{|e| e[:title]}).html_safe %>
+                    </p>
+                </div>
+        </div>
+</div>
+</a>
+</div>
+
+<%-end %>

@@ -1,0 +1,12 @@
+=render partial: 'fragments/html/errors', locals: {obj: @chapter}
+.form-group
+  =f.label :title, Chapter::EDITABLE_FIELDS[:title]
+  =f.text_field :title, class: 'form-control'
+.form-group
+  =f.label :chapter_id, Chapter::EDITABLE_FIELDS[:chapter_id]
+  =f.number_field :chapter_id, step:1
+.form-group
+  =f.label :description, Chapter::EDITABLE_FIELDS[:description]
+  =f.text_area :description,id:'froalaEditor',size: '50x20', class: 'form-control'
+
+

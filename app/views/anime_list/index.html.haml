@@ -1,0 +1,40 @@
+-content_for :title do
+  =t(".title#{@search_key=='title' ? '' : '_search'}#{@by_year ? '_by_year' : ''}#{@page>1 ? '_2' : ''}",page:@page,search_key:@search_key)
+-content_for :description do
+  =t(".description#{@search_key=='title' ? '' : '_search'}#{@by_year ? '_by_year' : ''}#{@page>1 ? '_2' : ''}",page:@page,search_key:@search_key)
+=content_for(:next_page) do
+  =special_page_link(@serials,:next_page)
+=content_for(:previous_page) do
+  =special_page_link(@serials,:previous_page)
+
+%main.page
+  .container-fluid
+    =render partial: 'fragments/adv/legal/adv_block'
+    .panel.bg-light
+
+      %h1.heading=t(".h1#{@search_key=='' ? '' : '_search'}#{@by_year ? '_by_year' : ''}#{@page>1 ? '_2' : ''}",page:@page,search_key:@search_key)
+
+      .catalog-filter
+        %a.catalog-filter-item.btn.btn-outline-primary{href: category_path('ongoing')}=t('ongoings')
+        %a.catalog-filter-item.btn.btn-outline-primary{href: by_year_index_path}=t('by_the_years')
+        %a.catalog-filter-item.btn.btn-outline-primary{href: genre_index_path}=t('genres')
+        %a.catalog-filter-item.btn.btn-outline-primary{href: category_index_path}=t('categories')
+        %a.catalog-filter-item.btn.btn-outline-primary{href: director_index_path}=t('directors')
+        %a.catalog-filter-item.btn.btn-outline-primary{href: author_index_path}=t('authors')
+        %a.catalog-filter-item.btn.btn-outline-primary{href: studio_index_path}=t('studios')
+        %a.catalog-filter-item.btn.btn-outline-primary{href: translator_index_path}=t('translators')
+
+      %ul.catalog-pagination.pagination
+        -@ru_letters.each_char do |l|
+          -if l==@search_key
+            %li.page-item.active
+              %span.page-link=@search_key
+          -else
+            %li.page-item
+              %a.page-link{href: anime_list_index_path(search_key:l)}=l
+      -if @serials.empty?
+        %div=t('.empty',search_key:@search_key)
+      -else
+        =render partial: 'fragments/haml/anime_list',locals: {serials:@serials}
+
+        =paginate @serials
